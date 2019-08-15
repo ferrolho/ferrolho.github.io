@@ -1,7 +1,7 @@
 ---
 permalink: /
 title: ""  # I removed the title here...
-excerpt: "About me"
+excerpt: "Home"
 author_profile: true
 redirect_from: 
   - /about/
@@ -19,7 +19,7 @@ The promised supplementary materials for our submitted letter are as of yet not 
 We have submitted the letter as a pre-print to arXiv.
 Once this submission is made public, we will make all the contents available.
 
-The estimated date for the release is: [`19:00 Thursday, 15 August 2019 (BST UTC+1)`](https://arxiv.org/localtime)
+The estimated date for the release is: [`Thursday 20:00, 15 August 2019 (EDT UTC-4)`](https://arxiv.org/localtime)
 
 We are deeply grateful for your comprehension.
 
