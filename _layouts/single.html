@@ -42,9 +42,14 @@ layout: default
           <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].date_label | default: "Published:" }}</strong> <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | default: "1900-01-01" | date: "%B %d, %Y" }}</time></p>
         {% endif %}
 
+        {% if page.paper_link %}
+          <p><i class="fas fa-globe"></i>
+          <a href="{{ page.paper_link }}">Online resource page</a></p>
+        {% endif %}
+
         {% if page.paper_id %}
-          <i class="fas fa-file-pdf"></i>
-          <a href="{{ site.url | append: site.baseurl | append: "/files/" | append: page.paper_id | append: ".pdf" }}">Download paper here</a>
+          <p><i class="fas fa-file-pdf"></i>
+          <a href="{{ site.url | append: site.baseurl | append: "/files/" | append: page.paper_id | append: ".pdf" }}">Download paper here</a></p>
         {% endif %}
 
         {% if page.citation and page.paperurl %}

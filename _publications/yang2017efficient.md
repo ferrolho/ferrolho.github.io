@@ -1,6 +1,7 @@
 ---
 date: 2017-07-17
 paper_id: 'yang2017efficient'
+paper_link: 'https://ieeexplore.ieee.org/abstract/document/7982667'
 title: "Efficient Humanoid Motion Planning on Uneven Terrain Using Paired Forward-Inverse Dynamic Reachability Maps"
 venue: "IEEE Robotics and Automation Letters"
 citation: >
