@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: ""  # I removed the title here...
+title: "Home"  # I removed the title here...
 excerpt: "Home"
 author_profile: true
 redirect_from: 
