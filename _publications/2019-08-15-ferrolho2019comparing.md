@@ -2,10 +2,10 @@
 date: 2019-08-15
 paper_id: 'ferrolho2019comparing'
 title: "Comparing Metrics for Robustness Against External Perturbations in Dynamic Trajectory Optimization"
-venue: "arXiv pre-print"
-# citation: >
-#   Y. Yang, W. Merkt, H. Ferrolho, V. Ivan and S. Vijayakumar, "Efficient Humanoid Motion Planning on Uneven Terrain Using Paired Forward-Inverse Dynamic Reachability Maps," in <em>IEEE Robotics and Automation Letters</em>, vol. 2, no. 4, pp. 2279-2286, Oct. 2017.
-# doi: 10.1109/LRA.2017.2727538
+venue: "arXiv e-prints"
+citation: >
+  H. Ferrolho, W. Merkt, C. Tiseo and S. Vijayakumar, "Comparing Metrics for Robustness Against External Perturbations in Dynamic Trajectory Optimization", in <em>arXiv e-prints</em>, p. arXiv:1908.05380, Aug. 2019.
+doi: arXiv:1908.05380
 collection: publications
 ---
 
