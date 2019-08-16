@@ -30,6 +30,7 @@ Dynamic trajectory optimization is a popular approach for generating optimal and
 ### Simulation results showing the normalized peak torques
 
 <div style="margin-bottom: 1.3em">
+  Scenario $\mathcal{S_1}$ — No payload
   <div class="overlay_display">
     <img src="{{ "/images/ferrolho2019comparing/peak-torque-s1/frame_0.svg" | absolute_url }}" />
     <img src="{{ "/images/ferrolho2019comparing/peak-torque-s1/frame_1.svg" | absolute_url }}" id="test_img1" />
@@ -42,6 +43,7 @@ Dynamic trajectory optimization is a popular approach for generating optimal and
 </div>
 
 <div style="margin-bottom: 1.3em">
+  Scenario $\mathcal{S_2}$ — Unaccounted 5kg payload
   <div class="overlay_display">
     <img src="{{ "/images/ferrolho2019comparing/peak-torque-s2/frame_0.svg" | absolute_url }}" />
     <img src="{{ "/images/ferrolho2019comparing/peak-torque-s2/frame_1.svg" | absolute_url }}" id="test_img2" />
@@ -54,6 +56,7 @@ Dynamic trajectory optimization is a popular approach for generating optimal and
 </div>
 
 <div style="margin-bottom: 1.3em">
+  Scenario $\mathcal{S_3}$ — Accounted 5kg payload
   <div class="overlay_display">
     <img src="{{ "/images/ferrolho2019comparing/peak-torque-s3/frame_0.svg" | absolute_url }}" />
     <img src="{{ "/images/ferrolho2019comparing/peak-torque-s3/frame_1.svg" | absolute_url }}" id="test_img3" />
