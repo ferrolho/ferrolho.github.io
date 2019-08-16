@@ -2,6 +2,7 @@
 date: 2019-08-15
 paper_id: 'ferrolho2019comparing'
 paper_link: 'https://arxiv.org/abs/1908.05380'
+paper_github: 'https://github.com/ferrolho/uoe-ferrolho2019comparing'
 title: "Comparing Metrics for Robustness Against External Perturbations in Dynamic Trajectory Optimization"
 venue: "arXiv e-prints"
 citation: >
