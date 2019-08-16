@@ -29,30 +29,42 @@ Dynamic trajectory optimization is a popular approach for generating optimal and
 
 ### Simulation results showing the normalized peak torques
 
-<div class="pngcontainer1">
-  <img src="{{ "/images/ferrolho2019comparing/peak-torque-s1/frame_0.svg" | absolute_url }}" />
-  <img src="{{ "/images/ferrolho2019comparing/peak-torque-s1/frame_1.svg" | absolute_url }}" id="test_img1" />
-</div>
-<div class="slidecontainer">
-  <input type="range" min="1" max="26" value="3" class="slider" id="myRange1">
-</div>
-
-<div class="pngcontainer1">
-  <img src="{{ "/images/ferrolho2019comparing/peak-torque-s2/frame_0.svg" | absolute_url }}" />
-  <img src="{{ "/images/ferrolho2019comparing/peak-torque-s2/frame_1.svg" | absolute_url }}" id="test_img2" />
-</div>
-<div class="slidecontainer">
-  <input type="range" min="1" max="26" value="3" class="slider" id="myRange2">
+<div style="margin-bottom: 1.3em">
+  <div class="overlay_display">
+    <img src="{{ "/images/ferrolho2019comparing/peak-torque-s1/frame_0.svg" | absolute_url }}" />
+    <img src="{{ "/images/ferrolho2019comparing/peak-torque-s1/frame_1.svg" | absolute_url }}" id="test_img1" />
+  </div>
+  <div class="container">
+    <div class="left"><input type="range" min="0" max="25" value="10" class="slider" id="myRange1"></div>
+    <div class="right">$F_\mathrm{peak}\ =\ $<span id="demo1"></span> N</div>
+    <div style="clear: both"></div>
+  </div>
 </div>
 
-<div class="pngcontainer1">
-  <img src="{{ "/images/ferrolho2019comparing/peak-torque-s3/frame_0.svg" | absolute_url }}" />
-  <img src="{{ "/images/ferrolho2019comparing/peak-torque-s3/frame_1.svg" | absolute_url }}" id="test_img3" />
-</div>
-<div class="slidecontainer">
-  <input type="range" min="1" max="26" value="3" class="slider" id="myRange3">
+<div style="margin-bottom: 1.3em">
+  <div class="overlay_display">
+    <img src="{{ "/images/ferrolho2019comparing/peak-torque-s2/frame_0.svg" | absolute_url }}" />
+    <img src="{{ "/images/ferrolho2019comparing/peak-torque-s2/frame_1.svg" | absolute_url }}" id="test_img2" />
+  </div>
+  <div class="container">
+    <div class="left"><input type="range" min="0" max="25" value="10" class="slider" id="myRange2"></div>
+    <div class="right">$F_\mathrm{peak}\ =\ $<span id="demo2"></span> N</div>
+    <div style="clear: both"></div>
+  </div>
 </div>
 
-<p id="demo"></p>
+<div style="margin-bottom: 1.3em">
+  <div class="overlay_display">
+    <img src="{{ "/images/ferrolho2019comparing/peak-torque-s3/frame_0.svg" | absolute_url }}" />
+    <img src="{{ "/images/ferrolho2019comparing/peak-torque-s3/frame_1.svg" | absolute_url }}" id="test_img3" />
+  </div>
+  <div class="container">
+    <div class="left"><input type="range" min="0" max="25" value="10" class="slider" id="myRange3"></div>
+    <div class="right">$F_\mathrm{peak}\ =\ $<span id="demo3"></span> N</div>
+    <div style="clear: both"></div>
+  </div>
+</div>
+
+
 
 <script src="{{ "/assets/js/custom/ferrolho2019comparing.js" | absolute_url }}"></script>

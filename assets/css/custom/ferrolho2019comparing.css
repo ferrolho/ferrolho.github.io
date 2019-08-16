@@ -1,3 +1,20 @@
+/* Container */
+
+.container {
+  width: 100%;
+}
+
+.left {
+  float: left;
+  width: 70%;
+}
+
+.right {
+  float: left;
+  text-align: center;
+  width: 30%;
+}
+
 /* Slider */
 
 .slider {
@@ -32,14 +49,16 @@
 
 /* Images */
 
-.pngcontainer1,
-.pngcontainer1 img {
+.overlay_display,
+.overlay_display img {
   position: relative;
 }
-.pngcontainer1 img {
+
+.overlay_display img {
   z-index: 101;
 }
-.pngcontainer1 img:first-child {
+
+.overlay_display img:first-child {
   position: absolute;
   top: 0;
   left: 0;
