@@ -20,6 +20,8 @@ collection: publications
 - [Abstract](#abstract)
 - [Results](#results)
   - [Simulation results showing the normalized peak torques](#simulation-results-showing-the-normalized-peak-torques)
+  - [Force Polytopes and Force Cone Visualization](#force-polytopes-and-force-cone-visualization)
+  - [Turntable View of a Force Polytope](#turntable-view-of-a-force-polytope)
 
 ## Abstract
 
@@ -68,6 +70,31 @@ Dynamic trajectory optimization is a popular approach for generating optimal and
   </div>
 </div>
 
+### Force Polytopes and Force Cone Visualization
 
+<div style="margin-bottom: 1.3em">
+  <div class="imageContainer">
+    <img src="{{ "/images/ferrolho2019comparing/1.png" | absolute_url }}" class="ghost" />
+    <img src="{{ "/images/ferrolho2019comparing/1.png" | absolute_url }}" id="layer1" />
+    <img src="{{ "/images/ferrolho2019comparing/4.png" | absolute_url }}" id="layer2" />
+    <img src="{{ "/images/ferrolho2019comparing/3.png" | absolute_url }}" id="layer3" />
+    <img src="{{ "/images/ferrolho2019comparing/2.png" | absolute_url }}" id="layer4" />
+  </div>
+  Layer selector
+  <div class="container">
+    <div class="left"  style="width: 50%;"><input type="range" min="1" max="4" value="4" class="slider" id="myRange4"></div>
+    <div class="right" style="width: 50%;"><span id="demo4"></span></div>
+    <div style="clear: both"></div>
+  </div>
+</div>
+
+### Turntable View of a Force Polytope
+
+<div style="text-align: center;">
+  <video width="100%" autoplay loop muted>
+    <source src="{{ "/videos/ferrolho2019comparing/force_polytope.mp4" | absolute_url }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
 
 <script src="{{ "/assets/js/custom/ferrolho2019comparing.js" | absolute_url }}"></script>
