@@ -80,14 +80,15 @@ h3 {
 
 .imageContainer img {
   position: absolute;
-  top: 0;
   z-index: 10;
+  left: 0;
+  top: 0;
 }
 
 .imageContainer .ghost {
-  left: 0;
-  position: relative;
-  top: 0;
   visibility: hidden;
+  position: relative;
   width: 100%;
+  left: 0;
+  top: 0;
 }
