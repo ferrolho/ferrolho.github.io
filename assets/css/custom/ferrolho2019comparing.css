@@ -12,13 +12,13 @@ h3 {
 
 .left {
   float: left;
-  width: 70%;
+  width: 65%;
 }
 
 .right {
   float: left;
   text-align: center;
-  width: 30%;
+  width: 25%;
 }
 
 /* Slider */

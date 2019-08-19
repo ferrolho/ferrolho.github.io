@@ -82,8 +82,8 @@ Dynamic trajectory optimization is a popular approach for generating optimal and
   </div>
   Layer selector
   <div class="container">
-    <div class="left"  style="width: 50%;"><input type="range" min="1" max="4" value="4" class="slider" id="myRange4"></div>
-    <div class="right" style="width: 50%;"><span id="demo4"></span></div>
+    <div class="left"  style="width: 40%;"><input type="range" min="1" max="4" value="4" class="slider" id="myRange4"></div>
+    <div class="right" style="width: 60%;"><span id="demo4">Force Polytope, $\mathcal{F}_{x_t}$</span></div>
     <div style="clear: both"></div>
   </div>
 </div>
