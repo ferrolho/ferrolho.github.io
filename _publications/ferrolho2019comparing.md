@@ -22,6 +22,7 @@ collection: publications
   - [Simulation results showing the normalized peak torques](#simulation-results-showing-the-normalized-peak-torques)
   - [Force Polytopes and Force Cone Visualization](#force-polytopes-and-force-cone-visualization)
   - [Turntable View of a Force Polytope](#turntable-view-of-a-force-polytope)
+  - [Trajectory Playback](#trajectory-playback)
 
 ## Abstract
 
@@ -93,6 +94,15 @@ Dynamic trajectory optimization is a popular approach for generating optimal and
 <div style="text-align: center;">
   <video width="100%" autoplay loop muted>
     <source src="{{ "/videos/ferrolho2019comparing/force_polytope.mp4" | absolute_url }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+### Trajectory Playback
+
+<div style="text-align: center;">
+  <video width="100%" autoplay muted id="myVideo">
+    <source src="{{ "/videos/ferrolho2019comparing/test.mp4" | absolute_url }}" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </div>
