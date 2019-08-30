@@ -13,8 +13,6 @@ collection: publications
 
 <link rel="stylesheet" href="{{ "/assets/css/custom/ferrolho2019comparing.css" | absolute_url }}">
 
-> We are still updating this page to include more interactive content.
-
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
 - [Abstract](#abstract)
