@@ -1,39 +1,18 @@
 ---
 permalink: /
-title: "Home"  # I removed the title here...
-excerpt: "Home"
+title: "News"  # I removed the title here...
 author_profile: true
 redirect_from: 
   - /about/
   - /about.html
 ---
 
-# CFP: Benchmarking Protocols for Robotic Manipulation
+Last updated: March 3, 2020.
 
-<br>
-Dear Viewer,
+Me and my colleagues have submitted our paper **"Optimizing Dynamic Trajectories for Robustness to Disturbances Using Polytopic Projections"** to *IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) 2020*.
 
-If you are here as a **reviewer** for the *IEEE Robotics and Automation Letters* (RA-L) Special Issue on "Benchmarking Protocols for Robotic Manipulation" this information is for you.
+<p>The manuscript is available <a href="{{ site.url | append: site.baseurl | append: "/files/ferrolho2020optimizing.pdf" }}">here <i class="fas fa-file-pdf"></i></a> and on <a href="https://arxiv.org/abs/2003.00609">arXiv <i class="fas fa-globe"></i></a>.</p>
 
-<i class="fas fa-link"></i> [Click here]({{ site.url | append: site.baseurl | append: "/publications/ferrolho2019comparing/" }})
-for supplementary materials, i.e., images and videos.
+Make sure to also watch our supplementary video below.
 
-<i class="fab fa-github"></i> [Click here](https://github.com/ferrolho/uoe-ferrolho2019comparing)
-for the *implementation* and *Jupyter notebooks* (for reproducibility of results).
-
-<!--
-The promised supplementary materials for our submitted letter are as of yet not available.
-We have submitted the letter as a pre-print to arXiv.
-Once this submission is made public, we will make all the contents available.
-
-The estimated date for the release is: [`Thursday 20:00, 15 August 2019 (EDT UTC-4)`](https://arxiv.org/localtime)
-
-We are deeply grateful for your comprehension.
--->
-
-Sincerely,
-
-Henrique Ferrolho  
-Wolfgang Merkt  
-Carlo Tiseo  
-Sethu Vijayakumar
+<iframe width="560" height="315" src="https://www.youtube.com/embed/KK-ZCWsEGGg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
