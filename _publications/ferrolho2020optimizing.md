@@ -10,7 +10,12 @@ doi: arXiv:2003.00609
 collection: publications
 ---
 
-<link rel="stylesheet" href="{{ "/assets/css/custom/ferrolho2020optimizing.css" | absolute_url }}">
+<div style="text-align: center;">
+  <video width="100%" autoplay loop muted>
+    <source src="{{ "/videos/ferrolho2020optimizing/1080p.mp4" | absolute_url }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
 
 ## Abstract
 
