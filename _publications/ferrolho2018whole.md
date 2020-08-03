@@ -3,9 +3,9 @@ date: 2018-11-06
 paper_id: 'ferrolho2018whole'
 paper_link: 'https://ieeexplore.ieee.org/abstract/document/8625026'
 title: "Whole-Body End-Pose Planning for Legged Robots on Inclined Support Surfaces in Complex Environments"
-venue: "2018 IEEE-RAS 18th International Conference on Humanoid Robots (Humanoids)"
+venue: "IEEE-RAS 18th International Conference on Humanoid Robots (Humanoids)"
 citation: >
-  H. Ferrolho, W. Merkt, Y. Yang, V. Ivan and S. Vijayakumar, "Whole-Body End-Pose Planning for Legged Robots on Inclined Support Surfaces in Complex Environments," <em>2018 IEEE-RAS 18th International Conference on Humanoid Robots (Humanoids)</em>, Beijing, China, 2018, pp. 944-951.
+  H. Ferrolho, W. Merkt, Y. Yang, V. Ivan and S. Vijayakumar, "Whole-Body End-Pose Planning for Legged Robots on Inclined Support Surfaces in Complex Environments," in <em>IEEE-RAS 18th International Conference on Humanoid Robots (Humanoids)</em>, Beijing, China, 2018.
 doi: 10.1109/HUMANOIDS.2018.8625026
 collection: publications
 ---

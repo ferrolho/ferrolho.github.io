@@ -5,7 +5,7 @@ paper_link: 'https://ieeexplore.ieee.org/abstract/document/7982667'
 title: "Efficient Humanoid Motion Planning on Uneven Terrain Using Paired Forward-Inverse Dynamic Reachability Maps"
 venue: "IEEE Robotics and Automation Letters"
 citation: >
-  Y. Yang, W. Merkt, H. Ferrolho, V. Ivan and S. Vijayakumar, "Efficient Humanoid Motion Planning on Uneven Terrain Using Paired Forward-Inverse Dynamic Reachability Maps," in <em>IEEE Robotics and Automation Letters</em>, vol. 2, no. 4, pp. 2279-2286, Oct. 2017.
+  Y. Yang, W. Merkt, H. Ferrolho, V. Ivan and S. Vijayakumar, "Efficient Humanoid Motion Planning on Uneven Terrain Using Paired Forward-Inverse Dynamic Reachability Maps," <em>IEEE Robotics and Automation Letters</em>, 2017.
 doi: 10.1109/LRA.2017.2727538
 collection: publications
 ---
