@@ -26,6 +26,10 @@ but it is possible to overcome this complication by exploiting the structure ind
 The non-trivial transcription proposed allows trajectory optimization frameworks to converge to highly robust dynamic solutions.
 We demonstrate the results of our approach using a quadruped robot equipped with a manipulator.
 
+## IROS 2020 Presentation Video
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/iCXW6fyR2rQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Supplementary Video
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/KK-ZCWsEGGg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
