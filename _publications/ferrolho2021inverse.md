@@ -1,6 +1,6 @@
 ---
-date: 2020-10-11
-paper_id: 'ferrolho2020inverse'
+date: 2021-02-28
+paper_id: 'ferrolho2021inverse'
 paper_link: 'https://arxiv.org/abs/2010.05359'
 title: "Inverse Dynamics vs. Forward Dynamics in Direct Transcription Formulations for Trajectory Optimization"
 venue: "IEEE International Conference on Robotics and Automation (ICRA)"

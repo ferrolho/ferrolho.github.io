@@ -13,7 +13,7 @@ Last updated: March, 2021.
 
 "Inverse Dynamics vs. Forward Dynamics in Direct Transcription Formulations for Trajectory Optimization" has been accepted to the *2021 IEEE International Conference on Robotics and Automation (ICRA)*, in Xi'an, China.
 
-<p>The preprint of the manuscript is available <a href="{{ site.url | append: site.baseurl | append: "/files/ferrolho2020inverse.pdf" }}">here <i class="fas fa-file-pdf"></i></a> and on <a href="https://arxiv.org/abs/2010.05359">arXiv <i class="fas fa-globe"></i></a>.</p>
+<p>The preprint of the manuscript is available <a href="{{ site.url | append: site.baseurl | append: "/files/ferrolho2021inverse.pdf" }}">here <i class="fas fa-file-pdf"></i></a> and on <a href="https://arxiv.org/abs/2010.05359">arXiv <i class="fas fa-globe"></i></a>.</p>
 
 You can watch the supplementary video below.
 
