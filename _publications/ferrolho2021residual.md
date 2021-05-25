@@ -1,16 +1,16 @@
 ---
-date: 2019-08-15
-paper_id: 'ferrolho2020residual'
-paper_link: 'https://arxiv.org/abs/1908.05380'
+date: 2021-05-24
+paper_id: 'ferrolho2021residual'
+paper_link: 'https://doi.org/10.1016/j.robot.2021.103814'
 title: "Residual Force Polytope: Admissible Task-Space Forces of Dynamic Trajectories"
-venue: "arXiv e-prints"
+venue: "Robotics and Autonomous Systems (RAS)"
 citation: >
-  H. Ferrolho, W. Merkt, C. Tiseo and S. Vijayakumar, "Residual Force Polytope: Admissible Task-Space Forces of Dynamic Trajectories", in <em>arXiv e-prints</em>, p. arXiv:1908.05380, Jul. 2020.
-doi: arXiv:1908.05380
+  H. Ferrolho, W. Merkt, C. Tiseo and S. Vijayakumar, "Residual Force Polytope: Admissible Task-Space Forces of Dynamic Trajectories," Robotics and Autonomous Systems (RAS), 2021.
+doi: 10.1016/j.robot.2021.103814
 collection: publications
 ---
 
-<link rel="stylesheet" href="{{ "/assets/css/custom/ferrolho2019comparing.css" | absolute_url }}">
+<link rel="stylesheet" href="{{ "/assets/css/custom/ferrolho2021residual.css" | absolute_url }}">
 
 ## Abstract
 
@@ -27,11 +27,11 @@ The computational cost of these metrics is relatively high and not compatible wi
 
 <div style="margin-bottom: 1.3em">
   <div class="imageContainer">
-    <img src="{{ "/images/ferrolho2019comparing/1.png" | absolute_url }}" class="ghost" />
-    <img src="{{ "/images/ferrolho2019comparing/1.png" | absolute_url }}" id="layer1" />
-    <img src="{{ "/images/ferrolho2019comparing/4.png" | absolute_url }}" id="layer2" />
-    <img src="{{ "/images/ferrolho2019comparing/3.png" | absolute_url }}" id="layer3" />
-    <img src="{{ "/images/ferrolho2019comparing/2.png" | absolute_url }}" id="layer4" />
+    <img src="{{ "/images/ferrolho2021residual/1.png" | absolute_url }}" class="ghost" />
+    <img src="{{ "/images/ferrolho2021residual/1.png" | absolute_url }}" id="layer1" />
+    <img src="{{ "/images/ferrolho2021residual/4.png" | absolute_url }}" id="layer2" />
+    <img src="{{ "/images/ferrolho2021residual/3.png" | absolute_url }}" id="layer3" />
+    <img src="{{ "/images/ferrolho2021residual/2.png" | absolute_url }}" id="layer4" />
   </div>
   Layer selector
   <div class="container">
@@ -45,9 +45,9 @@ The computational cost of these metrics is relatively high and not compatible wi
 
 <div style="text-align: center;">
   <video width="100%" autoplay loop muted>
-    <source src="{{ "/videos/ferrolho2019comparing/force_polytope.mp4" | absolute_url }}" type="video/mp4">
+    <source src="{{ "/videos/ferrolho2021residual/force_polytope.mp4" | absolute_url }}" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </div>
 
-<script src="{{ "/assets/js/custom/ferrolho2020residual.js" | absolute_url }}"></script>
+<script src="{{ "/assets/js/custom/ferrolho2021residual.js" | absolute_url }}"></script>

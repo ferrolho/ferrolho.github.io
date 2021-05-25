@@ -25,17 +25,17 @@ output3.innerHTML = slider3.value; // Display the default slider value
 
 slider1.oninput = function () {
     output1.innerHTML = this.value * 10;
-    image1.src = `${document.location.origin}/research/images/ferrolho2019comparing/peak-torque-s1/frame_${parseInt(this.value) + 1}.svg`;
+    image1.src = `${document.location.origin}/research/images/ferrolho2021residual/peak-torque-s1/frame_${parseInt(this.value) + 1}.svg`;
 }
 
 slider2.oninput = function () {
     output2.innerHTML = this.value * 10;
-    image2.src = `${document.location.origin}/research/images/ferrolho2019comparing/peak-torque-s2/frame_${parseInt(this.value) + 1}.svg`;
+    image2.src = `${document.location.origin}/research/images/ferrolho2021residual/peak-torque-s2/frame_${parseInt(this.value) + 1}.svg`;
 }
 
 slider3.oninput = function () {
     output3.innerHTML = this.value * 10;
-    image3.src = `${document.location.origin}/research/images/ferrolho2019comparing/peak-torque-s3/frame_${parseInt(this.value) + 1}.svg`;
+    image3.src = `${document.location.origin}/research/images/ferrolho2021residual/peak-torque-s3/frame_${parseInt(this.value) + 1}.svg`;
 }
 
 slider4.oninput = function () {

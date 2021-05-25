@@ -1,7 +1,7 @@
 ---
 date: 2018-11-06
 paper_id: 'ferrolho2018whole'
-paper_link: 'https://ieeexplore.ieee.org/abstract/document/8625026'
+paper_link: 'https://doi.org/10.1109/HUMANOIDS.2018.8625026'
 title: "Whole-Body End-Pose Planning for Legged Robots on Inclined Support Surfaces in Complex Environments"
 venue: "IEEE-RAS 18th International Conference on Humanoid Robots (Humanoids)"
 citation: >

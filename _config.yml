@@ -10,7 +10,7 @@ locale                   : "en_GB"
 title                    : "Henrique Ferrolho"
 title_separator          : "-"
 name                     : &name "Henrique Ferrolho"
-description              : &description "PhD Student at the University of Edinburgh"
+description              : &description "PhD Student at The University of Edinburgh"
 url                      : https://ferrolho.github.io
 baseurl                  : "/research"
 repository               : "research"
@@ -82,7 +82,7 @@ analytics:
 author:
   name             : "Henrique Ferrolho"
   avatar           : "profile.png"
-  bio              : "PhD Student at the University of Edinburgh"
+  bio              : "PhD Student at The University of Edinburgh"
   location         : "Edinburgh, UK"
   employer         :
   pubmed           :
