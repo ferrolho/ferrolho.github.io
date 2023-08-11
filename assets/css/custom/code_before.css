@@ -1,0 +1,12 @@
+pre > code::before {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  content: attr(prefix);
+  text-align: right;
+  display: inline-block;
+  margin-right: 10px;
+  margin-left: 5px;
+}

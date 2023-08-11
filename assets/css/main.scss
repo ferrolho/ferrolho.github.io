@@ -39,3 +39,129 @@
 @import "vendor/font-awesome/brands";
 @import "vendor/magnific-popup/magnific-popup";
 @import "print";
+
+@import "minima";
+
+figure:not(.highlight) {
+    text-align: center;
+}
+
+figure>img {
+    margin: auto;
+}
+
+hr {
+    height: 6px;
+    background: url(http://ibrahimjabbari.com/english/images/hr-12.png) repeat-x 0 0;
+    border: 0;
+    margin-bottom: 15px;
+}
+
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+
+._1t_p {
+    margin-bottom: 15px;
+    position: relative;
+
+    .fb-me-blue,
+    .fb-me-white {
+        display: block;
+        border-radius: 1.3em;
+        box-sizing: content-box;
+        outline: none;
+        position: relative;
+        margin: 1px 0;
+        max-width: 70%;
+
+        a {
+            color: rgba(0, 0, 0, 1);
+            text-decoration: underline;
+        }
+    }
+
+    .fb-me-blue,
+    .fb-me-white {
+        &.fb-me-img {
+            img {
+                border: 1px solid #e8e8e8;
+                border-radius: 1.3em;
+            }
+        }
+    }
+
+    .fb-me-blue:not(.fb-me-img),
+    .fb-me-white:not(.fb-me-img) {
+        font-size: 14px;
+        font-family: Helvetica Neue, Segoe UI, Helvetica, Arial, sans-serif;
+        text-rendering: optimizeLegibility;
+        word-wrap: break-word;
+        line-height: 1.28;
+        padding: 6px 12px;
+    }
+
+    .fb-me-blue {
+        clear: right;
+        float: right;
+
+        &:not(.fb-me-img) {
+            background-color: #0084ff;
+            color: #fff;
+        }
+    }
+
+    .fb-me-white {
+        clear: left;
+        float: left;
+
+        &:not(.fb-me-img) {
+            background-color: #f1f0f0;
+            color: rgba(0, 0, 0, 1);
+        }
+    }
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; // 16:9
+    margin-bottom: 15px;
+    height: 0;
+}
+
+.video-wrapper>iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* 2018-12-22-wechat-desktop-on-linux */
+
+.mac-style-drop-shadow {
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.55);
+    margin: 20px 20px 50px 20px;
+}
+
+#wine-installers {
+    text-align: justify;
+
+    &>img {
+        width: 40%;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    &:after {
+        width: 100%;
+        display: inline-block;
+    }
+}

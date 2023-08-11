@@ -10,7 +10,7 @@ locale                   : "en_GB"
 title                    : "Henrique Ferrolho"
 title_separator          : "-"
 name                     : &name "Henrique Ferrolho"
-description              : &description "PhD Student at The University of Edinburgh"
+description              : &description "Robotics Engineer, PhD"
 url                      : https://ferrolho.github.io
 baseurl                  : "/research"
 repository               : "research"
@@ -21,9 +21,9 @@ future                   : true
 read_more                : "disabled" # if enabled, adds "Read more" links to excerpts
 talkmap_link             : false #change to true to add link to talkmap on talks page
 comments:
-  provider               : # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
+  provider               : disqus # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
   disqus:
-    shortname            :
+    shortname            : ferrolho-github-io-blog
   discourse:
     server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
   facebook:
@@ -81,13 +81,13 @@ analytics:
 # Site Author
 author:
   name             : "Henrique Ferrolho"
-  avatar           : "profile.png"
-  bio              : "PhD Student at The University of Edinburgh"
-  location         : "Edinburgh, UK"
+  avatar           : "profile-bdi.jpg"
+  bio              : "Robotics Engineer, PhD"
+  location         : "London, UK"
   employer         :
   pubmed           :
   googlescholar    : "https://scholar.google.com/citations?user=Bn4_9pkAAAAJ"
-  email            :
+  email            : henrique.ferrolho@gmail.com
   researchgate     : "https://www.researchgate.net/profile/Henrique_Ferrolho"
   uri              :
   bitbucket        :
