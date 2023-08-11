@@ -7,7 +7,13 @@ redirect_from:
   - /about.html
 ---
 
-Last updated: May, 2021.
+Last updated: Aug, 2023.
+
+## Talk at JuliaCon 2023
+
+I gave a talk at [JuliaCon 2023](https://juliacon.org/2023/) about how we can use Julia to optimise trajectories for legged robots. Videos will soon be available on YouTube, but in the meantime you can watch my presentation below:
+
+<video width="100%" src="{{ "/videos/my_talk_at_juliacon_2023.webm" | absolute_url }}" autoplay controls muted>Your browser does not support the video tag.</video>
 
 ## Paper accepted to ICRA 2021
 
