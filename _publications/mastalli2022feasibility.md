@@ -5,7 +5,7 @@ paper_link: 'https://doi.org/10.1007/s10514-022-10061-w'
 title: "A feasibility-driven approach to control-limited DDP"
 venue: "Autonomous Robots (AuRo)"
 citation: >
-  C. Mastalli, W. Merkt, J. Marti-Saumell, H. Ferrolho, J. Sola, N. Mansard, S. Vijayakumar, "A feasibility-driven approach to control-limited DDP", Autonomous Robots (AuRo), 2022.
+  C. Mastalli, W. Merkt, J. Marti-Saumell, H. Ferrolho, J. Sola, N. Mansard, S. Vijayakumar, "A feasibility-driven approach to control-limited DDP," Autonomous Robots (AuRo), 2022.
 doi: 10.1007/s10514-022-10061-w
 collection: publications
 ---
