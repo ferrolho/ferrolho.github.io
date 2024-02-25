@@ -61,6 +61,17 @@ tags:
     }
 </style>
 
+<div class="panel warning-panel">
+  <div class="panel-header">
+    <i class="fas fa-exclamation-triangle panel-icon"></i>
+    <strong>Update - Feb 25, 2024</strong>
+  </div>
+  <div class="panel-message">
+    This blog post is useless for newer versions of Kdenlive.<br>
+    Please check the <a href="https://docs.kdenlive.org/en/effects_and_compositions/video_effects/alpha_mask_keying/motion_tracker.html">Motion Tracker</a> effect for more information.
+  </div>
+</div>
+
 # Introduction
 
 In this post I want to show you how to stabilize a video subject (person, object, etc.) with [Kdenlive](https://kdenlive.org/en/).
