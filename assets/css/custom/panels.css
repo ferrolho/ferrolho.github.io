@@ -1,0 +1,89 @@
+/*
+# Example Usage
+
+## Information Panel
+```
+<div class="note-panel">
+    <div class="panel-header">
+        <i class="fas fa-lightbulb panel-icon"></i>
+        <strong>Note</strong>
+    </div>
+    <div class="panel-message">
+        This is a note about something important.
+    </div>
+</div>
+```
+
+## Warning Panel
+```
+<div class="warning-panel">
+    <div class="panel-header">
+        <i class="fas fa-exclamation-triangle panel-icon"></i>
+        <strong>Warning</strong>
+    </div>
+    <div class="panel-message">
+        This is a warning message.
+    </div>
+</div>
+```
+
+## Error panel
+```
+<div class="error-panel">
+    <div class="panel-header">
+        <i class="fas fa-times-circle panel-icon"></i>
+        <strong>Error</strong>
+    </div>
+    <div class="panel-message">
+        Something went wrong. Please take corrective action.
+    </div>
+</div>
+```
+*/
+
+.panel {
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.panel-icon {
+    text-align: center;
+    width: 32px;
+}
+
+.panel-message {
+    margin-left: 36px;
+    margin-top: 8px;
+}
+
+.note-panel {
+    @extend .panel;
+    background-color: #F0F8FF;
+    border: 1px solid #87CEEB;
+    color: #333;
+}
+
+.note-panel .panel-icon {
+    color: #5E92B3;
+}
+
+.warning-panel {
+    background-color: #FFF8DC;
+    border: 1px solid #FFD700;
+    color: #333;
+}
+
+.warning-panel .panel-icon {
+    color: #D5A600;
+}
+
+.error-panel {
+    background-color: #FFC0CB;
+    border: 1px solid #FF1493;
+    color: #333;
+}
+
+.error-panel .panel-icon {
+    color: #B71C5E;
+}
