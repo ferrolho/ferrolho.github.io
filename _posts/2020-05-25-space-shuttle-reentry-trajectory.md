@@ -1,6 +1,7 @@
 ---
 title: "Space Shuttle Reentry Trajectory"
 date: 2020-05-25 22:00:00 +0100
+excerpt: ''
 categories:
   - optimal control
   - trajectory optimization

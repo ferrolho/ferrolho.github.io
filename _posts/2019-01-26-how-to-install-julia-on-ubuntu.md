@@ -1,6 +1,7 @@
 ---
 title: "How to Install Julia 1.8 on Ubuntu"
 date: 2019-01-26 18:24:00 +0000
+excerpt: ''
 categories:
   - Julia
   - Linux

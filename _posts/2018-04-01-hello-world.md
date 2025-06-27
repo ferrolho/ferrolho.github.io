@@ -1,6 +1,7 @@
 ---
 title: "Hello, World!"
 date: 2018-04-01 00:00:00 +0100
+excerpt: ''
 categories:
   - General
 ---

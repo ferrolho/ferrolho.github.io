@@ -1,6 +1,7 @@
 ---
 title: "Stabilizing a Video Subject in Kdenlive"
 date: 2020-08-09 23:00:00 +0100
+excerpt: ''
 categories:
   - Kdenlive
 tags:

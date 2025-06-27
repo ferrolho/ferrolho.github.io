@@ -1,6 +1,7 @@
 ---
 title: "Building a Self-Balancing Robot"
 date: 2018-04-22 16:33:00 +0100
+excerpt: ''
 og_image: "/images/balanbot/balanbot.png"
 categories:
   - Robotics

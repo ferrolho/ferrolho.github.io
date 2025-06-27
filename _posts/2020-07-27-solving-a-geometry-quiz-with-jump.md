@@ -2,6 +2,7 @@
 title: "Solving a Geometry Quiz with JuMP"
 date: 2020-07-27 17:00:00 +0100
 og_image: "/images/julia/square_quiz.png"
+excerpt: ''
 categories:
   - Optimization
   - Julia
