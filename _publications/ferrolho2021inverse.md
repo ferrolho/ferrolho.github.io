@@ -1,4 +1,5 @@
 ---
+excerpt: ''
 date: 2021-02-28
 paper_id: 'ferrolho2021inverse'
 paper_link: 'https://arxiv.org/abs/2010.05359'
@@ -8,6 +9,7 @@ citation: >
   H. Ferrolho, V. Ivan, W. Merkt, I. Havoutis, S. Vijayakumar, "Inverse Dynamics vs. Forward Dynamics in Direct Transcription Formulations for Trajectory Optimization," in <em>IEEE International Conference on Robotics and Automation (ICRA)</em>, Xi'an, China, 2021.
 doi: arXiv:2010.05359
 collection: publications
+category: conferences
 ---
 
 ## Abstract

@@ -1,4 +1,5 @@
 ---
+excerpt: ''
 date: 2021-05-24
 paper_id: 'ferrolho2021residual'
 paper_link: 'https://doi.org/10.1016/j.robot.2021.103814'
@@ -8,6 +9,7 @@ citation: >
   H. Ferrolho, W. Merkt, C. Tiseo and S. Vijayakumar, "Residual Force Polytope: Admissible Task-Space Forces of Dynamic Trajectories," Robotics and Autonomous Systems (RAS), 2021.
 doi: 10.1016/j.robot.2021.103814
 collection: publications
+category: manuscripts
 ---
 
 <link rel="stylesheet" href="{{ "/assets/css/custom/ferrolho2021residual.css" | absolute_url }}">
@@ -36,7 +38,7 @@ The computational cost of these metrics is relatively high and not compatible wi
   Layer selector
   <div class="container">
     <div class="left"  style="width: 40%;"><input type="range" min="1" max="4" value="4" class="slider" id="myRange4"></div>
-    <div class="right" style="width: 60%;"><span id="demo4">Force Polytope, $P_k$</span></div>
+    <div class="right" style="width: 60%;"><span id="demo4">Force Polytope, \(P_k\)</span></div>
     <div style="clear: both"></div>
   </div>
 </div>

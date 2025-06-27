@@ -1,4 +1,5 @@
 ---
+excerpt: ''
 date: 2020-03-01
 paper_id: 'ferrolho2020optimizing'
 paper_link: 'https://doi.org/10.1109/IROS45743.2020.9341788'
@@ -8,6 +9,7 @@ citation: >
   H. Ferrolho, W. Merkt, V. Ivan, W. Wolfslag, S. Vijayakumar, "Optimizing Dynamic Trajectories for Robustness to Disturbances Using Polytopic Projections," in <em>IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)</em>, Las Vegas, USA, 2020.
 doi: 10.1109/IROS45743.2020.9341788
 collection: publications
+category: conferences
 ---
 
 <div style="text-align: center;">

@@ -1,4 +1,5 @@
 ---
+excerpt: ''
 date: 2023-09-30
 paper_id: 'ferrolho2023roloma'
 paper_link: 'https://arxiv.org/abs/2203.01446'
@@ -8,6 +9,7 @@ citation: >
   H. Ferrolho, V. Ivan, W. Merkt, I. Havoutis, S. Vijayakumar, "RoLoMa: Robust Loco-Manipulation for Quadruped Robots with Arms," Autonomous Robots (AuRo), 2023.
 doi: arXiv:2203.01446
 collection: publications
+category: manuscripts
 ---
 
 ## Abstract
