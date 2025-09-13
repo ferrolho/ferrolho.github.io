@@ -52,60 +52,60 @@ var toggleTheme = () => {
    ========================================================================== */
 
 // Read the Plotly data from the code block, hide it, and render the chart as new node. This allows for the 
-// JSON data to be retrieve when the theme is switched.
+// JSON data to be retrieve when the theme is switched. The listener should only be added if the data is 
+// actually present on the page.
 import { plotlyDarkLayout, plotlyLightLayout } from './theme.js';
-document.addEventListener("readystatechange", () => {
-  if (document.readyState === "complete") {
-    document.querySelectorAll("pre>code.language-plotly").forEach((elem) => {
-      // Parse the Plotly JSON data and hide it
-      var jsonData = JSON.parse(elem.textContent);
-      elem.parentElement.classList.add("hidden");
+let plotlyElements = document.querySelectorAll("pre>code.language-plotly");
+if (plotlyElements.length > 0) {
+  document.addEventListener("readystatechange", () => {
+    if (document.readyState === "complete") {
+      plotlyElements.forEach((elem) => {
+        // Parse the Plotly JSON data and hide it
+        var jsonData = JSON.parse(elem.textContent);
+        elem.parentElement.classList.add("hidden");
 
-      // Add the Plotly node
-      let chartElement = document.createElement("div");
-      elem.parentElement.after(chartElement);
+        // Add the Plotly node
+        let chartElement = document.createElement("div");
+        elem.parentElement.after(chartElement);
 
-      // Set the theme for the plot and render it
-      const theme = (determineComputedTheme() === "dark") ? plotlyDarkLayout : plotlyLightLayout;
-      if (jsonData.layout) {
-        jsonData.layout.template = (jsonData.layout.template) ? { ...theme, ...jsonData.layout.template } : theme;
-      } else {
-        jsonData.layout = { template: theme };
-      }
-      Plotly.react(chartElement, jsonData.data, jsonData.layout);
-    });
-  }
-});
+        // Set the theme for the plot and render it
+        const theme = (determineComputedTheme() === "dark") ? plotlyDarkLayout : plotlyLightLayout;
+        if (jsonData.layout) {
+          jsonData.layout.template = (jsonData.layout.template) ? { ...theme, ...jsonData.layout.template } : theme;
+        } else {
+          jsonData.layout = { template: theme };
+        }
+        Plotly.react(chartElement, jsonData.data, jsonData.layout);
+      });
+    }
+  });
+}
 
 /* ==========================================================================
    Actions that should occur when the page has been fully loaded
    ========================================================================== */
 
 $(document).ready(function () {
+  // SCSS SETTINGS - These should be the same as the settings in the relevant files 
+  const scssLarge = 925;          // pixels, from /_sass/_themes.scss
+  const scssMastheadHeight = 70;  // pixels, from the current theme (e.g., /_sass/theme/_default.scss)
+
+  // If the user hasn't chosen a theme, follow the OS preference
   setTheme();
+  window.matchMedia('(prefers-color-scheme: dark)')
+        .addEventListener("change", (e) => {
+          if (!localStorage.getItem("theme")) {
+            setTheme(e.matches ? "dark" : "light");
+          }
+        });
 
-  // if user hasn't chosen a theme, follow OS changes
-  window
-    .matchMedia('(prefers-color-scheme: dark)')
-    .addEventListener("change", (e) => {
-      if (!localStorage.getItem("theme")) {
-        setTheme(e.matches ? "dark" : "light");
-      }
-    });
-
+  // Enable the theme toggle
   $('#theme-toggle').on('click', toggleTheme);
 
-  // These should be the same as the settings in _variables.scss
-  const scssLarge = 925; // pixels
-
-  // Sticky footer
+  // Enable the sticky footer
   var bumpIt = function () {
     $("body").css("margin-bottom", $(".page__footer").outerHeight(true));
-  },
-    didResize = false;
-
-  bumpIt();
-
+  }
   $(window).resize(function () {
     didResize = true;
   });
@@ -113,8 +113,9 @@ $(document).ready(function () {
     if (didResize) {
       didResize = false;
       bumpIt();
-    }
-  }, 250);
+    }}, 250);
+  var didResize = false;
+  bumpIt();
 
   // FitVids init
   fitvids();
@@ -132,61 +133,10 @@ $(document).ready(function () {
     }
   });
 
-  // init smooth scroll, this needs to be slightly more than then fixed masthead height
+  // Init smooth scroll, this needs to be slightly more than then fixed masthead height
   $("a").smoothScroll({
-    offset: -75, // needs to match $masthead-height
+    offset: -scssMastheadHeight,
     preventDefault: false,
-  });
-
-  // add lightbox class to all image links
-  // Add "image-popup" to links ending in image extensions,
-  // but skip any <a> that already contains an <img>
-  $("a[href$='.jpg'],\
-  a[href$='.jpeg'],\
-  a[href$='.JPG'],\
-  a[href$='.png'],\
-  a[href$='.gif'],\
-  a[href$='.webp']")
-    .not(':has(img)')
-    .addClass("image-popup");
-
-  // 1) Wrap every <p><img> (except emoji images) in an <a> pointing at the image, and give it the lightbox class
-  $('p > img').not('.emoji').each(function () {
-    var $img = $(this);
-    // skip if it’s already wrapped in an <a.image-popup>
-    if (!$img.parent().is('a.image-popup')) {
-      $('<a>')
-        .addClass('image-popup')
-        .attr('href', $img.attr('src'))
-        .insertBefore($img)   // place the <a> right before the <img>
-        .append($img);        // move the <img> into the <a>
-    }
-  });
-
-  // Magnific-Popup options
-  $(".image-popup").magnificPopup({
-    type: 'image',
-    tLoading: 'Loading image #%curr%...',
-    gallery: {
-      enabled: true,
-      navigateByImgClick: true,
-      preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
-    },
-    image: {
-      tError: '<a href="%url%">Image #%curr%</a> could not be loaded.',
-    },
-    removalDelay: 500, // Delay in milliseconds before popup is removed
-    // Class that is added to body when popup is open.
-    // make it unique to apply your CSS animations just to this exact popup
-    mainClass: 'mfp-zoom-in',
-    callbacks: {
-      beforeOpen: function () {
-        // just a hack that adds mfp-anim class to markup
-        this.st.image.markup = this.st.image.markup.replace('mfp-figure', 'mfp-figure mfp-with-anim');
-      }
-    },
-    closeOnContentClick: true,
-    midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
   });
 
 });
