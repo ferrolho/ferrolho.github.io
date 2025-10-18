@@ -12,7 +12,7 @@ site_theme               : "default"
 title                    : "Henrique Ferrolho"
 title_separator          : "-"
 name                     : &name "Henrique Ferrolho"
-description              : &description "Robotics Tech Lead, PhD"
+description              : &description "Robotics Technical Lead, PhD"
 url                      : https://ferrolho.github.io
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "ferrolho/ferrolho.github.io"
@@ -22,10 +22,10 @@ repository               : "ferrolho/ferrolho.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile-bdi.jpg"
+  avatar           : "profile-all3.jpg"
   name             : "Henrique Ferrolho"
   pronouns         : # example: "she/her"  
-  bio              : "Robotics Tech Lead, PhD"
+  bio              : "Robotics Technical Lead, PhD"
   location         : "London, UK"
   employer         : "ALL3"
   uri              : # URL
