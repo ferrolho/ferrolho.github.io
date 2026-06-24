@@ -8,7 +8,7 @@
 
 # Basic Site Settings
 locale                   : "en_GB"
-site_theme               : "default"
+site_theme               : "default" # The available themes options are "default", "air", "sunrise", "mint", "dirt" and "contrast"
 title                    : "Henrique Ferrolho"
 title_separator          : "-"
 name                     : &name "Henrique Ferrolho"
@@ -39,9 +39,12 @@ author:
   impactstory      : # URL
   orcid            : "https://orcid.org/0000-0003-4307-0028"
   semantic         : # URL
+  ssrn             : # URL
   pubmed           : # URL
   researchgate     : "https://www.researchgate.net/profile/Henrique_Ferrolho"
   scopus           : # URL
+  zotero           : # URL
+
 
   # Repositories and software development
   bitbucket        : # Username - Update with your username on the site
@@ -289,7 +292,7 @@ defaults:
 # Sass/SCSS
 sass:
   sass_dir: _sass
-  style: compressed # http://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
+  style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
 
 
 # Outputting
@@ -348,7 +351,7 @@ tag_archive:
 
 
 # HTML Compression
-# - http://jch.penibelst.de/
+# - https://jch.penibelst.de/
 compress_html:
   clippings: all
   ignore:
