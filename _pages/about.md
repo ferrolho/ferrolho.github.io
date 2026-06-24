@@ -39,7 +39,9 @@ Our work on "RoLoMa: Robust Loco-Manipulation for Quadruped Robots with Arms" wa
 
 I gave an invited talk at [JuliaCon 2023](https://juliacon.org/2023/) at the _Massachusetts Institute of Technology (MIT)_ about using Julia to optimize trajectories for legged robots. The talk covered practical applications of trajectory optimization for complex robotic systems.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/5uF3VqgjiVE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<div style="position: relative; width: 100%; max-width: 560px; aspect-ratio: 16 / 9; margin: 1em 0;">
+  <iframe src="https://www.youtube.com/embed/5uF3VqgjiVE" title="Talk at MIT - JuliaCon 2023" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
 
 ### PhD Completed (2022)
 
