@@ -17,8 +17,8 @@
   /* keep footer in normal document flow so custom widgets do not overlap content */
   height: auto;
 
-  /* keep the footer on the bottom of the page */
-  position: fixed;
+  /* keep the footer at the bottom of the page (sticky-footer pattern, not pinned to the viewport) */
+  position: absolute;
   bottom: 0;
 
   -webkit-animation: intro 0.3s both;
