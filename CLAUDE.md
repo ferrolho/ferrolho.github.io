@@ -29,6 +29,6 @@ The home-page hero embeds the pendulum demo from the rotary-inverted-pendulum re
 - A project page's file name and URL are the repo's exact name (`src/content/projects/TORA.jl.md` with `slug: TORA.jl` → `/projects/TORA.jl/`); its cover and preview use the same name. When a repo is renamed, rename these to match. Only projects without a single repo (Balanbot, RoLoMa, CreateJS Playground) use descriptive names.
 - Projects stay in their own repos (each with its own GitHub Pages at `ferrolho.github.io/<repo>/`); this site links to them rather than hosting them. Avoid project slugs that collide with those repo paths at the root — project pages live under `/projects/`.
 - Only public repos appear on the site. `draft: true` hides a project or post in production.
-- Design tokens are CSS custom properties in `src/styles/global.css`, with light and dark themes. Fonts: Geist (sans), Geist Mono, Instrument Serif (accents only). Accent is international orange.
+- Design tokens are CSS custom properties in `src/styles/global.css`, with light and dark themes. Fonts: Geist (sans), Geist Mono, Instrument Serif (display accents only — it's condensed, so never use it for maths), STIX Two Text (`--font-math`, for variables and equations). Accent is international orange.
 - Licence: code MIT, content CC BY 4.0, papers under their publishers' terms (`LICENSE`).
 - Commit messages: a single conventional-commit line, no body or trailers.
