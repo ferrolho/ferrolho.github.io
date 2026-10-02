@@ -51,6 +51,7 @@ Name everything after the project's repo, exactly (capitals and dots included).
    preview: /previews/<repo>.mp4  # optional: short muted loop played on hover
    featured: 3                 # optional: position on the home page (1 = the large feature card)
    youtube: VIDEO_ID           # optional: embedded at the top of the project page
+   embed: true                 # optional: let visitors run links.demo on the page (click to load; phones get a link)
    stars: 42                   # optional: GitHub stars snapshot
    views: 12k                  # optional: YouTube views snapshot
    draft: true                 # optional: only visible in `npm run dev`

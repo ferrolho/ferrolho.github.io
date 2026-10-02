@@ -35,6 +35,7 @@ const projects = defineCollection({
       stars: z.number().optional(), // GitHub stars snapshot
       views: z.string().optional(), // YouTube views snapshot, e.g. "380k"
       youtube: z.string().optional(), // video id embedded at the top of the page
+      embed: z.boolean().default(false), // show links.demo live on the page (click to load)
       links: z
         .object({
           demo: z.url().optional(),

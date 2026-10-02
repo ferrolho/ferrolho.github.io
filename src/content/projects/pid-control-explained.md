@@ -8,6 +8,7 @@ stack: [JavaScript, Canvas]
 cover: ../../assets/projects/pid-control-explained.jpg
 coverAlt: The PID demo with a cart on a rail, gain sliders, and an explanatory side panel.
 featured: 6
+embed: true
 links:
   demo: https://ferrolho.github.io/pid-control-explained/
   code: https://github.com/ferrolho/pid-control-explained

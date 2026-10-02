@@ -4,6 +4,7 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import YouTube from '../../components/YouTube.astro';
+import LiveDemo from '../../components/LiveDemo.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import { TOPICS } from '../../content.config';
 import { getProjects, projectYears, formatStars } from '../../lib/format';
@@ -43,6 +44,7 @@ const related = (await getProjects())
   .filter((p) => p.id !== project.id && shared(p) > 0)
   .sort((a, b) => shared(b) - shared(a))
   .slice(0, 3);
+const transitionName = `project-${project.id.replace(/[^\w-]/g, '-')}`;
 const external = (href: string) => /^https?:/.test(href);
 ---
 
@@ -84,22 +86,33 @@ const external = (href: string) => /^https?:/.test(href);
     </header>
 
     <div class="wrap hero-media">
-      <div class="media" style={`view-transition-name: project-${project.id.replace(/[^\w-]/g, '-')}`}>
-        {
-          d.youtube ? (
-            <YouTube id={d.youtube} title={d.title} poster={(await getImage({ src: d.cover, width: 1600, format: 'webp' })).src} />
-          ) : (
-            <Image
-              src={d.cover}
-              alt={d.coverAlt}
-              widths={[800, 1200, 1800]}
-              sizes="(max-width: 1240px) 100vw, 1160px"
-              loading="eager"
-              style={`object-position: ${d.coverPosition}`}
-            />
-          )
-        }
-      </div>
+      {
+        d.embed && d.links.demo ? (
+          <LiveDemo
+            src={d.links.demo}
+            title={d.title}
+            cover={d.cover}
+            coverAlt={d.coverAlt}
+            coverPosition={d.coverPosition}
+            transitionName={transitionName}
+          />
+        ) : (
+          <div class="media" style={`view-transition-name: ${transitionName}`}>
+            {d.youtube ? (
+              <YouTube id={d.youtube} title={d.title} poster={(await getImage({ src: d.cover, width: 1600, format: 'webp' })).src} />
+            ) : (
+              <Image
+                src={d.cover}
+                alt={d.coverAlt}
+                widths={[800, 1200, 1800]}
+                sizes="(max-width: 1240px) 100vw, 1160px"
+                loading="eager"
+                style={`object-position: ${d.coverPosition}`}
+              />
+            )}
+          </div>
+        )
+      }
     </div>
 
     <div class="wrap-narrow prose body">

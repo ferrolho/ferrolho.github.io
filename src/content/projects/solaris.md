@@ -8,6 +8,7 @@ stack: [TypeScript, Three.js, Vite]
 cover: ../../assets/projects/solaris.jpg
 coverAlt: Saturn and its rings rendered against a starfield.
 preview: /previews/solaris.mp4
+embed: true
 links:
   demo: https://ferrolho.github.io/solaris/
   code: https://github.com/ferrolho/solaris

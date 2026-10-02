@@ -9,6 +9,7 @@ cover: ../../assets/projects/robot-explorer.jpg
 coverAlt: The NASA Valkyrie humanoid posed with multi-limb IK gizmos in Robot Explorer's dark theme.
 featured: 3
 stars: 21
+embed: true
 links:
   demo: https://ferrolho.github.io/robot-explorer/
   code: https://github.com/ferrolho/robot-explorer

@@ -8,6 +8,7 @@ stack: [TypeScript, Svelte, PixiJS]
 cover: ../../assets/projects/robot-localization-explained.jpg
 coverAlt: A robot vacuum's true path and filter estimate diverging inside a room, with an uncertainty ellipse.
 preview: /previews/robot-localization-explained.mp4
+embed: true
 links:
   demo: https://ferrolho.github.io/robot-localization-explained/
   code: https://github.com/ferrolho/robot-localization-explained

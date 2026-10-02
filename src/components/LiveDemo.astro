@@ -1,0 +1,216 @@
+---
+// A project's live demo, framed on its page. Shows the cover until the visitor asks for
+// the app, so nothing heavy loads by default. Phones get a link instead: the demos are
+// desktop layouts and a framed app fights the page's scrolling.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  src: string;
+  title: string;
+  cover: ImageMetadata;
+  coverAlt: string;
+  coverPosition?: string;
+  transitionName?: string;
+}
+const { src, title, cover, coverAlt, coverPosition = '50% 50%' } = Astro.props;
+---
+
+<live-demo class="live" data-src={src} data-title={title} {...Astro.props.transitionName ? { style: `view-transition-name: ${Astro.props.transitionName}` } : {}}>
+  <div class="frame" data-frame>
+    <Image
+      src={cover}
+      alt={coverAlt}
+      widths={[800, 1200, 1800]}
+      sizes="(max-width: 1240px) 100vw, 1160px"
+      loading="eager"
+      style={`object-position: ${coverPosition}`}
+    />
+    <div class="launch">
+      <button type="button" class="btn btn-primary try" data-start>
+        <Icon name="play" size={13} /> Try it here
+      </button>
+      <a class="btn open-mobile" href={src} target="_blank" rel="noopener">
+        Open the live demo <Icon name="external" size={14} />
+      </a>
+      <p class="note">Runs in your browser — nothing to install.</p>
+    </div>
+  </div>
+  <div class="bar">
+    <span class="status"><span class="dot"></span><span data-status>Live demo</span></span>
+    <span class="tools">
+      <button type="button" data-fullscreen hidden><Icon name="expand" size={14} /> Fullscreen</button>
+      <a href={src} target="_blank" rel="noopener">Open in new tab <Icon name="external" size={13} /></a>
+    </span>
+  </div>
+</live-demo>
+
+<script>
+  class LiveDemo extends HTMLElement {
+    connectedCallback() {
+      const frame = this.querySelector<HTMLElement>('[data-frame]')!;
+      const status = this.querySelector<HTMLElement>('[data-status]')!;
+      const fs = this.querySelector<HTMLButtonElement>('[data-fullscreen]')!;
+      this.querySelector('[data-start]')?.addEventListener('click', () => {
+        const f = document.createElement('iframe');
+        f.src = this.dataset.src!;
+        f.title = `${this.dataset.title} — live demo`;
+        f.allow = 'fullscreen; usb; camera; gamepad';
+        f.addEventListener('load', () => (status.textContent = 'Live demo — running'));
+        frame.replaceChildren(f);
+        this.classList.add('running');
+        status.textContent = 'Loading…';
+        fs.hidden = !frame.requestFullscreen;
+        f.focus();
+      });
+      fs.addEventListener('click', () => frame.requestFullscreen?.());
+    }
+  }
+  if (!customElements.get('live-demo')) customElements.define('live-demo', LiveDemo);
+</script>
+
+<style>
+  .live {
+    display: block;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-sunk);
+    box-shadow: var(--shadow);
+  }
+
+  .frame {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    max-height: 82vh;
+    width: 100%;
+    background: var(--bg-sunk);
+  }
+
+  .frame > :global(img),
+  .frame > :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .frame > :global(img) {
+    object-fit: cover;
+    filter: saturate(0.9);
+  }
+
+  .frame:fullscreen > :global(iframe) {
+    background: #000;
+  }
+
+  .launch {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.15) 70%);
+  }
+
+  .try {
+    height: 48px;
+    padding: 0 22px;
+    font-size: 15px;
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  }
+
+  .try:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+
+  .note {
+    color: #fff;
+    font-size: 13px;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  }
+
+  .open-mobile {
+    display: none;
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 9px 14px;
+    border-top: 1px solid var(--line);
+    background: var(--bg-elev);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--line-2);
+  }
+
+  .live:global(.running) .dot {
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .tools {
+    display: inline-flex;
+    gap: 16px;
+  }
+
+  .tools a,
+  .tools button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ink-2);
+    font: inherit;
+    cursor: pointer;
+  }
+
+  .tools a:hover,
+  .tools button:hover {
+    color: var(--accent-ink);
+  }
+
+  .tools [hidden] {
+    display: none;
+  }
+
+  @media (max-width: 760px), (hover: none) {
+    .try,
+    .note {
+      display: none;
+    }
+    .open-mobile {
+      display: inline-flex;
+    }
+    .bar {
+      display: none;
+    }
+  }
+</style>
