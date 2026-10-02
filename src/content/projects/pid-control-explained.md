@@ -14,16 +14,16 @@ links:
   code: https://github.com/ferrolho/pid-control-explained
 ---
 
-An educational web app for building intuition about PID control through interactive visualisation, rather than through equations alone.
+An interactive explanation of PID control, built to give intuition rather than equations alone. You tune the gains on a simulated cart and see what each term is doing — as force arrows on the cart, in live plots of position and control force, and in step-response metrics.
 
 ## The system
 
-A 1D cart slides along a bounded rail. The controller applies a single scalar force — the only control input — and the cart obeys Newton's second law with viscous friction and optional gravity (a tilted rail). The goal is to drive the cart to a target position.
+A cart slides along a rail, pushed by a single force limited to ±100. It obeys Newton's second law with viscous friction, and tilting the rail adds a constant force along it. The controller runs at a fixed 100 Hz, independent of the screen's refresh rate.
 
 ## What you can do
 
-- **Tune the gains** — adjust *K*<sub>p</sub>, *K*<sub>i</sub>, and *K*<sub>d</sub> and watch position, error, and each term's contribution update live.
-- **Try preset scenarios** — well-tuned, too much P, no damping, P-only on a tilted rail (steady-state error), and aggressive D.
-- **Poke it** — add disturbances, click the canvas to move the target, or let auto-step alternate setpoints.
-- **Read the metrics** — rise time, settling time, overshoot, and steady-state error in real time.
-- **Learn the concepts** — clickable equation terms and a side panel covering integral windup, derivative kick, and tuning methods.
+- **Tune the gains** and watch the P, I, and D terms, and the net force, change live.
+- **Compare presets that differ in one thing**: P only versus well-tuned; a tilted rail with and without I; integral windup with anti-windup off and on.
+- **Poke it**: push the cart, click the rail to move the target, or let auto-step alternate setpoints.
+- **Read the metrics**: rise time, overshoot, settling time, and steady-state error, measured the standard way.
+- **Learn the concepts**: every term and metric opens an explanation, from the basics to windup, derivative kick, and tuning methods.

@@ -54,7 +54,12 @@ const { src, title, cover, coverAlt, coverPosition = '50% 50%' } = Astro.props;
       const fs = this.querySelector<HTMLButtonElement>('[data-fullscreen]')!;
       this.querySelector('[data-start]')?.addEventListener('click', () => {
         const f = document.createElement('iframe');
-        f.src = this.dataset.src!;
+        // Pass the site's current theme, so the demo matches even after a manual toggle.
+        const theme =
+          document.documentElement.dataset.theme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        const url = new URL(this.dataset.src!);
+        url.searchParams.set('theme', theme);
+        f.src = url.href;
         f.title = `${this.dataset.title} — live demo`;
         f.allow = 'fullscreen; usb; camera; gamepad';
         f.addEventListener('load', () => (status.textContent = 'Live demo — running'));
