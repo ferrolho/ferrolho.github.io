@@ -11,6 +11,7 @@ import profile from '../assets/profile.jpg';
 import { site, socials } from '../data/site';
 import { videos, channel } from '../data/videos';
 import { archive } from '../data/archive';
+import channelStats from '../data/stats.json';
 import { getFeatured, getProjects, getPublications, getPosts, formatDate } from '../lib/format';
 
 const featured = (await getFeatured()).slice(0, 7);
@@ -24,7 +25,7 @@ const firstYear = Math.min(...archive.map((a) => a.year));
 
 const stats = [
   { value: `${(Math.floor(stars / 100) / 10).toFixed(1)}k`, label: 'GitHub stars across projects' },
-  { value: '700k+', label: 'views on YouTube' },
+  { value: `${Math.floor(channelStats.channelViews / 10000) * 10}k+`, label: 'views on YouTube' },
   { value: '7', label: 'peer-reviewed papers' },
   { value: `${new Date().getFullYear() - firstYear}`, label: `years of side projects, since ${firstYear}` },
 ];

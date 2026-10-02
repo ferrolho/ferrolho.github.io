@@ -7,8 +7,8 @@ stack: [Python, ESP32, viser]
 cover: ../../assets/projects/tof-3d-scanner.jpg
 coverAlt: Laser-like rays fanning out from a small sensor breadboard into a 3D point cloud.
 featured: 2
-stars: 521
-views: 380k
+stars: 525
+views: 389k
 youtube: s32OUzhjf4U
 links:
   code: https://github.com/ferrolho/VL53L5CX-BNO08X-viewer

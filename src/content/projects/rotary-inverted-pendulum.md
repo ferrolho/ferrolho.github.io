@@ -8,8 +8,8 @@ stack: [Python, MuJoCo, Arduino, Astro]
 cover: ../../assets/projects/rotary-inverted-pendulum.jpg
 coverAlt: A commercial £4,500 lab pendulum next to the white 3D-printed £20 build.
 featured: 1
-stars: 97
-views: 30k
+stars: 98
+views: 31k
 youtube: rKChjuuR7K8
 links:
   demo: https://ferrolho.github.io/rotary-inverted-pendulum/

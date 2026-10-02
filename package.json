@@ -11,7 +11,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "refresh:stats": "node scripts/refresh-stats.mjs"
   },
   "allowScripts": {
     "esbuild": true,
