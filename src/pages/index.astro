@@ -1,0 +1,583 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PendulumHero from '../components/PendulumHero.astro';
+import Icon from '../components/Icon.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SectionHead from '../components/SectionHead.astro';
+import PubRow from '../components/PubRow.astro';
+import VideoCard from '../components/VideoCard.astro';
+import profile from '../assets/profile.jpg';
+import { site, socials } from '../data/site';
+import { videos, channel } from '../data/videos';
+import { archive } from '../data/archive';
+import { getFeatured, getProjects, getPublications, getPosts, formatDate } from '../lib/format';
+
+const featured = (await getFeatured()).slice(0, 7);
+const projects = await getProjects();
+const pubs = (await getPublications()).slice(0, 4);
+const posts = (await getPosts()).slice(0, 4);
+const topVideos = videos.filter((v) => v.group !== 'music').slice(0, 4);
+
+const stars = [...projects.map((p) => p.data.stars ?? 0), ...archive.map((a) => a.stars ?? 0)].reduce((a, b) => a + b, 0);
+const firstYear = Math.min(...archive.map((a) => a.year));
+
+const stats = [
+  { value: `${(Math.floor(stars / 100) / 10).toFixed(1)}k`, label: 'GitHub stars across projects' },
+  { value: '700k+', label: 'views on YouTube' },
+  { value: '7', label: 'peer-reviewed papers' },
+  { value: `${new Date().getFullYear() - firstYear}`, label: `years of side projects, since ${firstYear}` },
+];
+
+const log = [
+  { when: 'Oct 2025', what: 'Co-organised “The Art of Robustness: Surviving Failures in Robotics”, a workshop at IROS 2025 in Hangzhou.', href: 'https://art-of-robustness-iros2025.github.io' },
+  { when: 'Sep 2025', what: 'Seminar on trajectory optimisation with whole-body dynamics for Georgia Tech’s AI4OPT PhD course.' },
+  { when: 'Feb 2025', what: 'Invited talk at the Beijing Institute for General Artificial Intelligence (BIGAI).' },
+  { when: 'Jul 2024', what: 'Co-organised “Tactile Sensing for General Purpose Robot Learning” at RSS 2024 in Delft.', href: 'https://noosphereworkshop.github.io' },
+  { when: 'Sep 2023', what: 'RoLoMa — robust loco-manipulation for quadrupeds with arms — published in Autonomous Robots.', href: '/publications/ferrolho2023roloma/' },
+  { when: 'Jul 2023', what: 'Talk at JuliaCon 2023, MIT: using Julia to optimise trajectories for robots with legs.', href: 'https://youtu.be/5uF3VqgjiVE' },
+  { when: 'Jun 2022', what: 'Defended my PhD, “Trajectory Optimisation for Legged Robots”, at Edinburgh — with no corrections.' },
+];
+---
+
+<Base>
+  <!-- ───────── Hero ───────── -->
+  <section class="hero blueprint">
+    <div class="wrap hero-grid">
+      <div class="intro">
+        <div class="who">
+          <Image src={profile} alt="Henrique Ferrolho" width={96} height={96} class="avatar" loading="eager" />
+          <div>
+            <p class="name">{site.name}</p>
+            <p class="role">
+              {site.role} at <a href={site.employer.url}>{site.employer.name}</a> · PhD
+            </p>
+          </div>
+        </div>
+        <h1>
+          I make robots <span class="serif-accent">move</span>, and build tools that show how.
+        </h1>
+        <p class="lead">
+          I work on motion planning, trajectory optimisation, and whole-body control for legged robots and manipulators.
+          Outside work I build open-source hardware and interactive simulations, and explain them on YouTube.
+        </p>
+        <div class="cta">
+          <a class="btn btn-primary" href="/projects/">Explore projects <Icon name="arrow" size={16} /></a>
+          <a class="btn" href={site.cv}><Icon name="download" size={16} /> CV</a>
+          <span class="socials">
+            {
+              socials.slice(0, 4).map((s) => (
+                <a href={s.href} aria-label={s.label} title={s.label} rel="me noopener" target="_blank">
+                  <Icon name={s.id} size={18} />
+                </a>
+              ))
+            }
+          </span>
+        </div>
+      </div>
+      <div class="figure">
+        <PendulumHero />
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── Numbers ───────── -->
+  <section class="stats-band">
+    <div class="wrap stats">
+      {
+        stats.map((s) => (
+          <div class="stat">
+            <p class="stat-value">{s.value}</p>
+            <p class="stat-label">{s.label}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ───────── Selected work ───────── -->
+  <section class="section">
+    <div class="wrap">
+      <SectionHead index="01" eyebrow="Selected work" title="Things I’ve <em>built</em>" href="/projects/" cta={`All ${projects.length} projects`} />
+      <div class="bento">
+        {featured.map((p, i) => <ProjectCard project={p} size={i === 0 ? 'lg' : 'md'} eager={i < 2} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── Research ───────── -->
+  <section class="section">
+    <div class="wrap research">
+      <div class="research-intro">
+        <SectionHead index="02" eyebrow="Research" title="Robust motion, <em>planned</em> ahead" />
+        <p class="lead">
+          My PhD at the University of Edinburgh asked how to plan dynamic motions that stay feasible when the world pushes
+          back — making robustness to disturbances part of the optimisation itself, not an afterthought for the controller.
+        </p>
+        <p class="muted small">
+          Direct transcription · rigid-body dynamics · force polytopes · legged loco-manipulation on ANYmal, Valkyrie, and
+          TALOS.
+        </p>
+        <div class="research-links">
+          <a class="link-arrow" href="/publications/">All publications <Icon name="arrow" size={16} /></a>
+          <a class="link-arrow" href="/files/HenriqueFerrolho_PhdThesis_v1.1.pdf">PhD thesis (PDF) <Icon name="arrow" size={16} /></a>
+        </div>
+      </div>
+      <div class="research-list">
+        {pubs.map((p) => <PubRow pub={p} compact />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── Log ───────── -->
+  <section class="section">
+    <div class="wrap log-grid">
+      <SectionHead index="03" eyebrow="Log" title="Recently" href="/talks/" cta="Talks & service" />
+      <ol class="log">
+        {
+          log.map((l) => (
+            <li>
+              <time>{l.when}</time>
+              <p>
+                {l.href ? (
+                  <a href={l.href}>
+                    {l.what}
+                    <Icon name="external" size={13} />
+                  </a>
+                ) : (
+                  l.what
+                )}
+              </p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ───────── Videos ───────── -->
+  <section class="section">
+    <div class="wrap">
+      <SectionHead index="04" eyebrow="On YouTube" title="Builds, explained" href={channel} cta="Visit the channel" />
+      <div class="videos">
+        {topVideos.map((v) => <VideoCard video={v} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── Writing ───────── -->
+  <section class="section">
+    <div class="wrap">
+      <SectionHead index="05" eyebrow="Writing" title="Notes & tutorials" href="/blog/" cta="All posts" />
+      <ul class="posts">
+        {
+          posts.map((p) => (
+            <li>
+              <a href={`/blog/${p.id}/`}>
+                <time>{formatDate(p.data.date, { month: 'short', year: 'numeric' })}</time>
+                <span class="post-title">{p.data.title}</span>
+                <span class="post-tags">{p.data.tags.slice(0, 2).join(' · ')}</span>
+                <Icon name="arrow" size={16} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero */
+  .hero {
+    position: relative;
+    padding-block: clamp(40px, 7vw, 96px) clamp(48px, 7vw, 88px);
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 20% 30%, transparent 30%, var(--bg) 100%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+
+  .who {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .who :global(.avatar) {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--line-2);
+  }
+
+  .name {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .role {
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+
+  .role a {
+    color: var(--ink-2);
+    text-decoration: underline;
+    text-decoration-color: var(--line-2);
+    text-underline-offset: 3px;
+  }
+
+  .role a:hover {
+    color: var(--accent-ink);
+    text-decoration-color: var(--accent);
+  }
+
+  h1 {
+    margin-top: clamp(24px, 3.5vw, 36px);
+    font-size: clamp(40px, 6.2vw, 76px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    font-weight: 600;
+  }
+
+  h1 .serif-accent {
+    font-size: 1.12em;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+    padding-right: 0.04em;
+  }
+
+  .intro .lead {
+    margin-top: 24px;
+    max-width: 52ch;
+  }
+
+  .cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 32px;
+  }
+
+  .socials {
+    display: inline-flex;
+    gap: 2px;
+    margin-left: 8px;
+  }
+
+  .socials a {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    color: var(--ink-3);
+    transition:
+      color 0.15s,
+      background 0.15s;
+  }
+
+  .socials a:hover {
+    color: var(--ink);
+    background: var(--bg-sunk);
+  }
+
+  /* Stats */
+  .stats-band {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-elev);
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .stat {
+    padding: 26px 24px 26px 0;
+  }
+
+  .stat + .stat {
+    padding-left: 24px;
+    border-left: 1px solid var(--line);
+  }
+
+  .stat-value {
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stat-label {
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  /* Bento */
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(28px, 3vw, 40px) clamp(20px, 2.4vw, 32px);
+  }
+
+  .bento > :global(.card.lg) {
+    grid-column: 1 / -1;
+    padding-bottom: clamp(8px, 2vw, 20px);
+  }
+
+  /* Research */
+  .research {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .research-intro {
+    position: sticky;
+    top: calc(var(--header-h) + 32px);
+  }
+
+  .research-intro .lead {
+    margin-top: -8px;
+  }
+
+  .small {
+    margin-top: 16px;
+    font-size: 14px;
+    font-family: var(--font-mono);
+    line-height: 1.7;
+  }
+
+  .research-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    margin-top: 28px;
+  }
+
+  .research-list :global(.pub:first-child) {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  /* Log */
+  .log-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: clamp(24px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .log {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  .log::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    bottom: 10px;
+    width: 1px;
+    background: var(--line-2);
+  }
+
+  .log li {
+    position: relative;
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 16px;
+    padding: 0 0 22px 28px;
+  }
+
+  .log li::before {
+    content: '';
+    position: absolute;
+    left: 1px;
+    top: 7px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 1.5px solid var(--ink-3);
+  }
+
+  .log li:first-child::before {
+    background: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+
+  .log time {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--ink-3);
+    padding-top: 2px;
+  }
+
+  .log p {
+    color: var(--ink-2);
+  }
+
+  .log a {
+    color: var(--ink);
+    transition: color 0.15s;
+  }
+
+  .log a :global(svg) {
+    display: inline;
+    margin-left: 4px;
+    vertical-align: -1px;
+    color: var(--ink-3);
+  }
+
+  .log a:hover {
+    color: var(--accent-ink);
+  }
+
+  /* Videos */
+  .videos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  /* Posts */
+  .posts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .posts a {
+    display: grid;
+    grid-template-columns: 110px 1fr auto 20px;
+    gap: 20px;
+    align-items: baseline;
+    padding: 18px 4px;
+    border-bottom: 1px solid var(--line);
+    transition:
+      background 0.15s,
+      padding 0.2s;
+  }
+
+  .posts a:hover {
+    background: var(--bg-elev);
+    padding-inline: 14px;
+  }
+
+  .posts time,
+  .post-tags {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+
+  .post-title {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .posts a :global(svg) {
+    color: var(--ink-3);
+    align-self: center;
+    transition:
+      transform 0.2s,
+      color 0.2s;
+  }
+
+  .posts a:hover :global(svg) {
+    color: var(--accent-ink);
+    transform: translateX(3px);
+  }
+
+  .posts a:hover .post-title {
+    color: var(--accent-ink);
+  }
+
+  /* Responsive */
+  @media (max-width: 1080px) {
+    .videos {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 960px) {
+    .hero-grid,
+    .research,
+    .log-grid {
+      grid-template-columns: 1fr;
+    }
+    .research-intro {
+      position: static;
+    }
+    .bento {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .stats {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .stat:nth-child(3) {
+      padding-left: 0;
+      border-left: 0;
+    }
+    .stat:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .bento {
+      grid-template-columns: 1fr;
+    }
+    .videos {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .posts a {
+      grid-template-columns: 1fr 20px;
+      gap: 4px 12px;
+    }
+    .posts time {
+      grid-column: 1 / -1;
+    }
+    .post-tags {
+      display: none;
+    }
+    .log li {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .socials {
+      margin-left: 0;
+    }
+  }
+</style>

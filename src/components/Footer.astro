@@ -1,0 +1,178 @@
+---
+import Icon from './Icon.astro';
+import { nav, site, socials } from '../data/site';
+
+const built = new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="top">
+      <div class="hello">
+        <p class="eyebrow">Get in touch</p>
+        <a class="email" href={`mailto:${site.email}`}>
+          {site.email}
+          <Icon name="arrow" size={22} />
+        </a>
+        <p class="muted small">
+          Happy to chat about robotics, trajectory optimisation, or any of the projects here.
+        </p>
+      </div>
+      <div class="cols">
+        <div>
+          <p class="col-title">Site</p>
+          <ul>
+            <li><a href="/">Home</a></li>
+            {
+              nav.map((n) => (
+                <li>
+                  <a href={n.href}>{n.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div>
+          <p class="col-title">Elsewhere</p>
+          <ul>
+            {
+              socials.map((s) => (
+                <li>
+                  <a href={s.href} rel="me noopener" target="_blank">
+                    {s.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© {new Date().getFullYear()} {site.name}</span>
+      <span class="sep">·</span>
+      <span>{site.location}</span>
+      <span class="sep">·</span>
+      <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>
+      <span class="grow"></span>
+      <span>Updated {built}</span>
+      <span class="sep">·</span>
+      <a href="https://github.com/ferrolho/ferrolho.github.io">Source</a>
+      <span class="sep">·</span>
+      <a href="/rss.xml">RSS</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: clamp(64px, 10vw, 120px);
+    border-top: 1px solid var(--line);
+    background: var(--bg-elev);
+  }
+
+  .top {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 48px;
+    padding-block: clamp(48px, 7vw, 80px);
+  }
+
+  .email {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+    font-size: clamp(22px, 3.4vw, 36px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    word-break: break-all;
+    transition: color 0.15s;
+  }
+
+  .email :global(svg) {
+    flex-shrink: 0;
+    color: var(--accent);
+    transition: transform 0.2s;
+  }
+
+  .email:hover {
+    color: var(--accent-ink);
+  }
+
+  .email:hover :global(svg) {
+    transform: translateX(4px);
+  }
+
+  .small {
+    margin-top: 12px;
+    font-size: 14px;
+    max-width: 44ch;
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .col-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 12px;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 6px;
+  }
+
+  ul a {
+    font-size: 15px;
+    color: var(--ink-2);
+    transition: color 0.15s;
+  }
+
+  ul a:hover {
+    color: var(--accent-ink);
+  }
+
+  .bottom {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-block: 20px;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .bottom a:hover {
+    color: var(--ink);
+  }
+
+  .grow {
+    flex: 1;
+  }
+
+  @media (max-width: 760px) {
+    .top {
+      grid-template-columns: 1fr;
+    }
+    .grow {
+      flex-basis: 100%;
+      height: 0;
+    }
+    .bottom .sep:nth-of-type(1) {
+      display: inline;
+    }
+  }
+</style>

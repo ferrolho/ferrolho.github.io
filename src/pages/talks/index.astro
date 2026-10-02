@@ -1,0 +1,163 @@
+---
+import Page from '../../layouts/Page.astro';
+import Icon from '../../components/Icon.astro';
+import YouTube from '../../components/YouTube.astro';
+import { talks } from '../../data/talks';
+
+const featured = talks.find((t) => t.video)!;
+const years = [...new Set(talks.map((t) => t.date.slice(0, 4)))];
+const month = (d: string) => new Date(`${d}-01`).toLocaleDateString('en-GB', { month: 'short' });
+---
+
+<Page title="Talks" eyebrow="Talks & service" index="03" heading="Talks &amp; <em>service</em>" description="Invited talks, seminars, workshops I have organised, and community service.">
+  <Fragment slot="intro">
+    Invited talks and seminars, workshops I have co-organised at IROS and RSS, and the odd hackathon judging panel.
+  </Fragment>
+
+  <div class="feature">
+    <YouTube id={featured.video!} title={featured.title!} />
+    <div>
+      <p class="eyebrow">{featured.venue}</p>
+      <h2>{featured.title}</h2>
+      <p class="muted">
+        How Julia’s performance and ecosystem make it a great fit for trajectory optimisation, with practical examples on
+        legged robots.
+      </p>
+    </div>
+  </div>
+
+  {
+    years.map((y) => (
+      <section class="year-group">
+        <h2 class="year">{y}</h2>
+        <ul>
+          {talks
+            .filter((t) => t.date.startsWith(y))
+            .map((t) => (
+              <li>
+                <span class="when">{month(t.date)}</span>
+                <span class="kind">{t.kind}</span>
+                <div class="what">
+                  {t.title && (
+                    <p class="t">
+                      {t.href ? (
+                        <a href={t.href}>
+                          {t.title} <Icon name="external" size={13} />
+                        </a>
+                      ) : (
+                        t.title
+                      )}
+                    </p>
+                  )}
+                  <p class="v">
+                    {!t.title && t.href ? <a href={t.href}>{t.venue}</a> : t.venue}
+                    {t.place && <span> · {t.place}</span>}
+                  </p>
+                </div>
+              </li>
+            ))}
+        </ul>
+      </section>
+    ))
+  }
+</Page>
+
+<style>
+  .feature {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: clamp(24px, 4vw, 48px);
+    align-items: center;
+    margin-bottom: 56px;
+  }
+
+  .feature h2 {
+    margin-top: 10px;
+    font-size: clamp(24px, 3vw, 34px);
+  }
+
+  .feature .muted {
+    margin-top: 12px;
+  }
+
+  .year-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    border-top: 1px solid var(--ink);
+  }
+
+  .year {
+    padding-top: 18px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-3);
+    letter-spacing: 0;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: grid;
+    grid-template-columns: 48px 150px 1fr;
+    gap: 16px;
+    align-items: baseline;
+    padding: 16px 0;
+  }
+
+  li + li {
+    border-top: 1px solid var(--line);
+  }
+
+  .when,
+  .kind {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+
+  .kind {
+    color: var(--accent-ink);
+  }
+
+  .t {
+    font-weight: 500;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+  }
+
+  .t a :global(svg) {
+    display: inline;
+    vertical-align: -1px;
+    color: var(--ink-3);
+  }
+
+  .t a:hover,
+  .v a:hover {
+    color: var(--accent-ink);
+  }
+
+  .v {
+    margin-top: 2px;
+    font-size: 14.5px;
+    color: var(--ink-2);
+  }
+
+  @media (max-width: 760px) {
+    .feature,
+    .year-group {
+      grid-template-columns: 1fr;
+    }
+    li {
+      grid-template-columns: 48px 1fr;
+      gap: 4px 12px;
+    }
+    .what {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

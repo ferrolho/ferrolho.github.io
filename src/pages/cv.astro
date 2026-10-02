@@ -1,0 +1,266 @@
+---
+import Page from '../layouts/Page.astro';
+import Icon from '../components/Icon.astro';
+import { experience, education, teaching, skills, other } from '../data/cv';
+import { site } from '../data/site';
+---
+
+<Page title="CV" eyebrow="Curriculum vitae" heading="CV" description="Experience, education, teaching, and skills.">
+  <Fragment slot="intro">
+    Robotics engineer and technical lead, with a PhD in trajectory optimisation for legged robots.
+    <p class="dl"><a class="btn btn-primary" href={site.cv}><Icon name="download" size={15} /> Download PDF</a></p>
+  </Fragment>
+
+  <section class="block">
+    <h2 class="label">Experience</h2>
+    <div>
+      {
+        experience.map((r) => (
+          <div class="entry">
+            <p class="org">
+              {r.href ? <a href={r.href}>{r.org}</a> : r.org}
+              <span class="place">{r.place}</span>
+            </p>
+            {r.positions.map((p) => (
+              <p class="pos">
+                <span>{p.title}</span>
+                <span class="when">{p.when}</span>
+              </p>
+            ))}
+            {r.summary && <p class="summary">{r.summary}</p>}
+            {r.points && (
+              <ul>
+                {r.points.map((pt) => (
+                  <li>{pt}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="block">
+    <h2 class="label">Education</h2>
+    <div>
+      {
+        education.map((e) => (
+          <div class="entry">
+            <p class="pos">
+              <span class="strong">{e.what}</span>
+              <span class="when">{e.when}</span>
+            </p>
+            <p class="place-line">{e.where}</p>
+            {e.note && <p class="summary">{e.note}</p>}
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="block">
+    <h2 class="label">Research</h2>
+    <div class="entry">
+      <p class="summary">
+        Seven peer-reviewed papers on trajectory optimisation and robustness — see <a href="/publications/">publications</a>.
+        Invited talks at MIT, Georgia Tech, and BIGAI; workshops co-organised at IROS 2025 and RSS 2024 — see <a href="/talks/">talks</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2 class="label">Teaching</h2>
+    <div>
+      {
+        teaching.map((e) => (
+          <div class="entry">
+            <p class="pos">
+              <span class="strong">{e.what}</span>
+              <span class="when">{e.when}</span>
+            </p>
+            <p class="place-line">{e.where}</p>
+            <p class="summary">{e.note}</p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="block">
+    <h2 class="label">Skills</h2>
+    <div class="skills">
+      {
+        skills.map((s) => (
+          <div>
+            <p class="skill-area">{s.area}</p>
+            <p class="chips">
+              {s.items.map((i) => (
+                <span class="chip">{i}</span>
+              ))}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="block">
+    <h2 class="label">Other</h2>
+    <ul class="other">
+      {
+        other.map((o) => (
+          <li>
+            <span>{o.what}</span>
+            <span class="when">{o.when}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Page>
+
+<style>
+  .dl {
+    margin-top: 22px;
+  }
+
+  .block {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    padding-block: 32px;
+    border-top: 1px solid var(--ink);
+  }
+
+  .label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .entry + .entry {
+    margin-top: 28px;
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+  }
+
+  .org {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  .org a:hover {
+    color: var(--accent-ink);
+  }
+
+  .place,
+  .when {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 400;
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+
+  .pos {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 6px;
+    color: var(--ink-2);
+  }
+
+  .strong {
+    color: var(--ink);
+    font-weight: 600;
+    font-size: 17px;
+  }
+
+  .place-line {
+    color: var(--ink-3);
+    font-size: 15px;
+  }
+
+  .summary {
+    margin-top: 10px;
+    color: var(--ink-2);
+    max-width: 72ch;
+  }
+
+  .summary a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+  }
+
+  ul {
+    margin: 10px 0 0;
+    padding-left: 1.2em;
+    color: var(--ink-2);
+  }
+
+  li + li {
+    margin-top: 4px;
+  }
+
+  li::marker {
+    color: var(--ink-3);
+  }
+
+  .skills {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .skill-area {
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .other {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .other li {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  @media (max-width: 760px) {
+    .block {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .skills {
+      grid-template-columns: 1fr;
+    }
+    .pos,
+    .org {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+</style>

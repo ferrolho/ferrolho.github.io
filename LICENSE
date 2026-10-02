@@ -1,6 +1,6 @@
-The MIT License (MIT)
+MIT License — applies to the source code of this website only (see "Content" below).
 
-Copyright (c) 2016 Michael Rose
+Copyright (c) 2026 Henrique Ferrolho
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,18 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+Content
+
+The MIT License above does not cover the site's content: the text of pages and
+blog posts, photographs, images, and videos in src/content/, src/assets/, and
+public/. That content is © Henrique Ferrolho and licensed under the Creative
+Commons Attribution 4.0 International licence (CC BY 4.0): you may share and
+adapt it, including commercially, as long as you give appropriate credit.
+https://creativecommons.org/licenses/by/4.0/
+
+Exceptions: published papers in public/files/ remain under the copyright terms
+of their respective publishers, and third-party material is used under its own
+terms where noted.

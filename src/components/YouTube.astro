@@ -1,0 +1,101 @@
+---
+// Click-to-load YouTube embed: shows the thumbnail until the visitor asks for the video.
+interface Props {
+  id: string;
+  title: string;
+  poster?: string;
+}
+const { id, title, poster = `https://i.ytimg.com/vi/${id}/maxresdefault.jpg` } = Astro.props;
+---
+
+<yt-lite class="yt" data-id={id} data-title={title}>
+  <img src={poster} alt="" loading="lazy" decoding="async" />
+  <button type="button" class="yt-play" aria-label={`Play video: ${title}`}>
+    <svg viewBox="0 0 68 48" width="68" height="48" aria-hidden="true">
+      <path d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.3.3 34 .3 34 .3s-21.3 0-26.5 1.4a8.5 8.5 0 0 0-6 6C.1 12.9.1 24 .1 24s0 11.1 1.4 16.3a8.5 8.5 0 0 0 6 6C12.7 47.7 34 47.7 34 47.7s21.3 0 26.5-1.4a8.5 8.5 0 0 0 6-6C67.9 35.1 67.9 24 67.9 24s0-11.1-1.4-16.3z" class="bg"></path>
+      <path d="M45 24 27 14v20z" fill="#fff"></path>
+    </svg>
+  </button>
+  <span class="yt-title">{title}</span>
+</yt-lite>
+
+<script>
+  class YtLite extends HTMLElement {
+    connectedCallback() {
+      this.querySelector('button')?.addEventListener('click', () => {
+        const f = document.createElement('iframe');
+        f.src = `https://www.youtube-nocookie.com/embed/${this.dataset.id}?autoplay=1&rel=0`;
+        f.title = this.dataset.title ?? 'YouTube video';
+        f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+        f.allowFullscreen = true;
+        this.replaceChildren(f);
+        this.classList.add('active');
+      });
+    }
+  }
+  if (!customElements.get('yt-lite')) customElements.define('yt-lite', YtLite);
+</script>
+
+<style>
+  .yt {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: #000;
+    border: 1px solid var(--line);
+  }
+
+  .yt img,
+  .yt :global(iframe) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 0;
+  }
+
+  .yt img {
+    transition:
+      transform 0.5s,
+      filter 0.3s;
+  }
+
+  .yt-play {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent 45%);
+    border: 0;
+    cursor: pointer;
+  }
+
+  .yt-play .bg {
+    fill: rgba(20, 20, 20, 0.8);
+    transition: fill 0.2s;
+  }
+
+  .yt:hover .yt-play .bg,
+  .yt-play:focus-visible .bg {
+    fill: #ff0033;
+  }
+
+  .yt:hover img {
+    transform: scale(1.02);
+  }
+
+  .yt-title {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 12px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+  }
+</style>

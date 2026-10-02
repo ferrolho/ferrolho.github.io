@@ -1,0 +1,108 @@
+---
+import { Image } from 'astro:assets';
+import type { Video } from '../data/videos';
+import Icon from './Icon.astro';
+
+interface Props {
+  video: Video;
+}
+const { video } = Astro.props;
+---
+
+<a class="vid" href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank" rel="noopener">
+  <div class="frame">
+    <Image
+      src={`https://i.ytimg.com/vi/${video.id}/hqdefault.jpg`}
+      alt=""
+      width={480}
+      height={360}
+      loading="lazy"
+    />
+    <span class="dur">{video.duration}</span>
+    <span class="play"><Icon name="play" size={18} /></span>
+  </div>
+  <p class="title">{video.title}</p>
+  <p class="meta">{video.views} views</p>
+</a>
+
+<style>
+  .vid {
+    display: block;
+    min-width: 0;
+  }
+
+  .frame {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-sunk);
+  }
+
+  .frame :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+
+  .vid:hover .frame :global(img) {
+    transform: scale(1.04);
+  }
+
+  .dur {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+  .play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    margin: -22px 0 0 -22px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.8);
+    transition:
+      opacity 0.2s,
+      transform 0.25s;
+  }
+
+  .vid:hover .play {
+    opacity: 1;
+    transform: none;
+  }
+
+  .title {
+    margin-top: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.4;
+    transition: color 0.15s;
+  }
+
+  .vid:hover .title {
+    color: var(--accent-ink);
+  }
+
+  .meta {
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+</style>

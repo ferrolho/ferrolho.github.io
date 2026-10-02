@@ -1,49 +1,14 @@
-# Ignore the contents of the _site directory and other cache directories
-_site/
-.sass-cache/
+# Build output and caches
+dist/
+.astro/
+node_modules/
 
-# Ignore the directory for local files during development
-local/
+# Environment
+.env
+.env.*
 
-# Ignore the Gemfile that is generated
-Gemfile.lock
-
-# Ignore files created by npm
-node_modules
-package-lock.json
-
-# Ignore the vendor file at root level and bundle for alternative installation
-/vendor/
-.bundle/
-
-# Ignore folders related to IDEs
+# Editors and OS
 .vscode/
-
-# === Global/macOS.gitignore
-
-# General
+.idea/
 .DS_Store
-.AppleDouble
-.LSOverride
-
-# Icon must end with two \r
-Icon
-
-# Thumbnails
 ._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk

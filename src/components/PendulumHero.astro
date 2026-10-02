@@ -1,0 +1,354 @@
+---
+// The rotary inverted pendulum, live. The 3D stage is the pendulum docs' own /embed/
+// page in an iframe — the same network, physics, and meshes, with no copy here. This
+// figure draws the chrome and talks to the embed over postMessage (see embed.ts in the
+// pendulum repo for the protocol). If the embed cannot load, the project's cover shows instead.
+import { Image } from 'astro:assets';
+import cover from '../assets/projects/rotary-inverted-pendulum.jpg';
+
+const embed =
+  import.meta.env.PUBLIC_PENDULUM_EMBED ??
+  (import.meta.env.DEV
+    ? 'http://127.0.0.1:4322/rotary-inverted-pendulum/embed/'
+    : 'https://ferrolho.github.io/rotary-inverted-pendulum/embed/');
+---
+
+<figure class="rp" data-pendulum>
+  <div class="rp-head">
+    <span class="rp-title"><span class="dot"></span>Fig. 1<span class="rp-sub">&nbsp;— rotary inverted pendulum, live</span></span>
+    <span class="rp-mode" data-mode>LOADING</span>
+  </div>
+  <div class="rp-stage">
+    <a class="rp-fallback" href="/projects/rotary-inverted-pendulum/" tabindex="-1">
+      <Image src={cover} alt="The £20 rotary inverted pendulum next to a £4,500 lab version." widths={[640, 960]} sizes="(max-width: 960px) 100vw, 560px" />
+    </a>
+    <iframe
+      src={embed}
+      title="Live 3D demo of the rotary inverted pendulum. Drag the pendulum to push it."
+      loading="eager"
+      data-frame></iframe>
+    <p class="rp-status" data-status></p>
+    <p class="rp-hint" data-hint>drag the pendulum to push it</p>
+  </div>
+  <div class="rp-readout" aria-hidden="true">
+    <span><i>t</i><b data-t>0.0</b>s</span>
+    <span><i>θ</i><b data-th>—</b>°</span>
+    <span><i>φ</i><b data-phi>—</b>°</span>
+    <span><i>a</i><b data-a>—</b></span>
+  </div>
+  <figcaption>
+    <span>
+      The <a href="/projects/rotary-inverted-pendulum/">£20 pendulum</a>’s own 689-parameter network, driving a MuJoCo
+      model of the rig in your browser.
+    </span>
+    <span class="rp-buttons">
+      <button type="button" data-push disabled>Push</button>
+      <button type="button" data-toggle disabled aria-pressed="true">Control on</button>
+    </span>
+  </figcaption>
+</figure>
+
+<script>
+  const fig = document.querySelector<HTMLElement>('[data-pendulum]');
+  if (fig) mount(fig);
+
+  function mount(fig: HTMLElement) {
+    const $ = <T extends HTMLElement>(s: string) => fig.querySelector<T>(s)!;
+    const frame = $<HTMLIFrameElement>('[data-frame]');
+    const status = $('[data-status]');
+    const hint = $('[data-hint]');
+    const mode = $('[data-mode]');
+    const pushBtn = $<HTMLButtonElement>('[data-push]');
+    const toggleBtn = $<HTMLButtonElement>('[data-toggle]');
+    const out = { t: $('[data-t]'), th: $('[data-th]'), phi: $('[data-phi]'), a: $('[data-a]') };
+    const send = (msg: Record<string, unknown>) => frame.contentWindow?.postMessage(msg, '*');
+    const deg = (r: number) => `${r >= 0 ? '+' : ''}${((r * 180) / Math.PI).toFixed(1)}`;
+
+    let ready = false;
+    let controlOn = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // No embed after a while (offline, blocked, not deployed): keep the static cover.
+    const giveUp = setTimeout(() => {
+      if (ready) return;
+      fig.classList.add('fallback');
+      mode.textContent = 'OFFLINE';
+    }, 10000);
+
+    window.addEventListener('message', (e) => {
+      if (e.source !== frame.contentWindow || typeof e.data !== 'object' || !e.data) return;
+      const m = e.data;
+      if (m.type === 'rip:ready') {
+        ready = true;
+        clearTimeout(giveUp);
+        fig.classList.add('live');
+        send({ type: 'rip:control', on: controlOn });
+      } else if (m.type === 'rip:status') {
+        status.textContent = m.text;
+        if (!m.text) {
+          pushBtn.disabled = false;
+          toggleBtn.disabled = false;
+        }
+      } else if (m.type === 'rip:grab') {
+        hint.classList.add('gone');
+      } else if (m.type === 'rip:state') {
+        out.t.textContent = m.t.toFixed(1);
+        out.th.textContent = deg(m.theta);
+        out.phi.textContent = deg(m.phi);
+        out.a.textContent = `${m.action >= 0 ? '+' : ''}${m.action.toFixed(2)}`;
+        mode.textContent = !m.controlOn ? 'CONTROL OFF' : m.balanced ? 'BALANCING' : 'SWINGING UP';
+        mode.classList.toggle('on', m.controlOn && m.balanced);
+      }
+    });
+
+    pushBtn.addEventListener('click', () => {
+      send({ type: 'rip:push' });
+      hint.classList.add('gone');
+    });
+    toggleBtn.addEventListener('click', () => {
+      controlOn = !controlOn;
+      send({ type: 'rip:control', on: controlOn });
+      toggleBtn.textContent = controlOn ? 'Control on' : 'Control off';
+      toggleBtn.setAttribute('aria-pressed', String(controlOn));
+    });
+    toggleBtn.textContent = controlOn ? 'Control on' : 'Control off';
+  }
+</script>
+
+<style>
+  .rp {
+    margin: 0;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: color-mix(in oklab, var(--bg-elev) 70%, transparent);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .rp-head,
+  figcaption {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--ink-3);
+  }
+
+  .rp-head {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .rp-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    50% {
+      box-shadow: 0 0 0 6px transparent;
+    }
+  }
+
+  .rp-mode {
+    white-space: nowrap;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    letter-spacing: 0.06em;
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      background 0.2s;
+  }
+
+  .rp-mode:global(.on) {
+    color: var(--accent-ink);
+    border-color: color-mix(in oklab, var(--accent) 40%, transparent);
+    background: var(--accent-soft);
+  }
+
+  .rp-stage {
+    position: relative;
+    height: clamp(300px, 34vw, 420px);
+    background:
+      radial-gradient(ellipse 55% 60% at 50% 55%, color-mix(in oklab, var(--accent) 7%, transparent), transparent 70%),
+      linear-gradient(var(--grid) 1px, transparent 1px) center / 24px 24px,
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px) center / 24px 24px;
+  }
+
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    /* Match the embed's (unset) colour scheme so the frame stays transparent in dark mode. */
+    color-scheme: normal;
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+
+  .rp:global(.live) iframe {
+    opacity: 1;
+  }
+
+  .rp-fallback {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+
+  .rp-fallback :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .rp:global(.fallback) .rp-fallback {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .rp:global(.fallback) iframe,
+  .rp:global(.fallback) .rp-hint,
+  .rp:global(.fallback) .rp-status {
+    display: none;
+  }
+
+  .rp-status {
+    position: absolute;
+    inset: auto 0 14px;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--ink-3);
+    pointer-events: none;
+  }
+
+  .rp-hint {
+    position: absolute;
+    right: 14px;
+    top: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-3);
+    pointer-events: none;
+    transition: opacity 0.4s;
+  }
+
+  .rp-hint::before {
+    content: '↙ ';
+    color: var(--accent-ink);
+  }
+
+  .rp-hint:global(.gone) {
+    opacity: 0;
+  }
+
+  .rp-readout {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .rp-readout span {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    padding: 9px 14px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rp-readout span + span {
+    border-left: 1px solid var(--line);
+  }
+
+  .rp-readout i {
+    font-style: italic;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    color: var(--ink-2);
+  }
+
+  .rp-readout b {
+    font-weight: 500;
+    color: var(--ink);
+    margin-left: auto;
+  }
+
+  figcaption {
+    border-top: 1px solid var(--line);
+    font-family: var(--font-sans);
+    font-size: 13px;
+  }
+
+  figcaption a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 2px;
+  }
+
+  .rp-buttons {
+    display: inline-flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .rp-buttons button {
+    height: 28px;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    background: var(--bg);
+    color: var(--ink-2);
+    font: 500 12px var(--font-sans);
+    cursor: pointer;
+  }
+
+  .rp-buttons button:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  .rp-buttons button:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  @media (max-width: 520px) {
+    .rp-sub,
+    figcaption > span:first-child {
+      display: none;
+    }
+    figcaption {
+      justify-content: flex-end;
+    }
+    .rp-readout {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .rp-readout span:nth-child(3) {
+      border-left: 0;
+    }
+    .rp-readout span:nth-child(n + 3) {
+      border-top: 1px solid var(--line);
+    }
+  }
+</style>

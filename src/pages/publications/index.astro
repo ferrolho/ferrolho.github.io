@@ -1,0 +1,100 @@
+---
+import Page from '../../layouts/Page.astro';
+import PubRow from '../../components/PubRow.astro';
+import Icon from '../../components/Icon.astro';
+import { getPublications } from '../../lib/format';
+import { socials } from '../../data/site';
+
+const pubs = await getPublications();
+const years = [...new Set(pubs.map((p) => p.data.date.getFullYear()))];
+const scholar = socials.find((s) => s.id === 'scholar')!.href;
+---
+
+<Page title="Research" eyebrow="Research" index="02" heading="Publications" description="Peer-reviewed papers on trajectory optimisation, robustness, and loco-manipulation for legged robots.">
+  <Fragment slot="intro">
+    Papers from my PhD and research at the University of Edinburgh, on trajectory optimisation, robustness to
+    disturbances, and loco-manipulation for legged robots. Also on <a href={scholar}>Google Scholar</a>.
+  </Fragment>
+
+  <div class="thesis">
+    <div>
+      <p class="eyebrow">PhD thesis · 2022</p>
+      <h2>Trajectory Optimisation for Legged Robots</h2>
+      <p class="muted">
+        The University of Edinburgh. Supervised by Prof. Sethu Vijayakumar; examined by Dr. Steve Tonneau and Prof. Olivier
+        Stasse. Passed with no corrections.
+      </p>
+    </div>
+    <a class="btn" href="/files/HenriqueFerrolho_PhdThesis_v1.1.pdf"><Icon name="paper" size={15} /> Read the thesis</a>
+  </div>
+
+  {
+    years.map((y) => (
+      <section class="year-group">
+        <h2 class="year">{y}</h2>
+        <div>
+          {pubs
+            .filter((p) => p.data.date.getFullYear() === y)
+            .map((p) => (
+              <PubRow pub={p} />
+            ))}
+        </div>
+      </section>
+    ))
+  }
+</Page>
+
+<style>
+  .thesis {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 28px;
+    margin-bottom: 48px;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg-elev);
+  }
+
+  .thesis h2 {
+    margin-top: 8px;
+    font-size: clamp(22px, 2.6vw, 30px);
+  }
+
+  .thesis .muted {
+    margin-top: 8px;
+    max-width: 62ch;
+    font-size: 15px;
+  }
+
+  .year-group {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    border-top: 1px solid var(--ink);
+  }
+
+  .year-group + .year-group {
+    margin-top: 12px;
+  }
+
+  .year {
+    padding-top: 22px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-3);
+    letter-spacing: 0;
+  }
+
+  .year-group :global(.pub:first-child) {
+    border-top: 0;
+  }
+
+  @media (max-width: 760px) {
+    .year-group {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

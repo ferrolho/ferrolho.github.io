@@ -1,0 +1,167 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { getPosts, formatDate } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post, i) => ({
+    params: { id: post.id },
+    props: { post, newer: posts[i - 1], older: posts[i + 1] },
+  }));
+}
+
+const { post, newer, older } = Astro.props;
+const d = post.data;
+const { Content } = await render(post);
+const words = (post.body ?? '').replace(/<[^>]+>/g, ' ').split(/\s+/).filter(Boolean).length;
+const minutes = Math.max(1, Math.round(words / 200));
+---
+
+<Base title={d.title} description={d.description} article>
+  <article>
+    <header class="wrap-narrow head">
+      <a class="back" href="/blog/"><Icon name="arrow-left" size={15} /> Writing</a>
+      <p class="meta">
+        <time datetime={d.date.toISOString()}>{formatDate(d.date, { day: 'numeric', month: 'long', year: 'numeric' })}</time>
+        <span>·</span>
+        <span>{minutes} min read</span>
+        {d.tags.length > 0 && <span>·</span>}
+        {d.tags.map((t) => <span class="chip">{t}</span>)}
+      </p>
+      {d.draft && <p class="draft-note">Draft — only visible in <code>npm run dev</code>.</p>}
+      <h1>{d.title}</h1>
+      {d.description && <p class="lead">{d.description}</p>}
+    </header>
+
+    <div class="wrap-narrow prose body">
+      <Content />
+    </div>
+  </article>
+
+  <nav class="wrap-narrow pager" aria-label="More posts">
+    {
+      older ? (
+        <a href={`/blog/${older.id}/`}>
+          <span class="dir">
+            <Icon name="arrow-left" size={14} /> Older
+          </span>
+          <span class="t">{older.data.title}</span>
+        </a>
+      ) : (
+        <span />
+      )
+    }
+    {
+      newer ? (
+        <a href={`/blog/${newer.id}/`} class="next">
+          <span class="dir">
+            Newer <Icon name="arrow" size={14} />
+          </span>
+          <span class="t">{newer.data.title}</span>
+        </a>
+      ) : (
+        <span />
+      )
+    }
+  </nav>
+</Base>
+
+<style>
+  .head {
+    padding-top: clamp(28px, 4vw, 48px);
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+
+  .back:hover {
+    color: var(--accent-ink);
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+
+  .draft-note {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--accent-ink);
+  }
+
+  h1 {
+    margin-top: 16px;
+    font-size: clamp(34px, 5vw, 54px);
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+  }
+
+  .lead {
+    margin-top: 16px;
+  }
+
+  .body {
+    margin-top: 40px;
+  }
+
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 72px;
+  }
+
+  .pager a {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 20px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition:
+      border-color 0.15s,
+      background 0.15s;
+  }
+
+  .pager a:hover {
+    border-color: var(--ink-3);
+    background: var(--bg-elev);
+  }
+
+  .pager .next {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .dir {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .t {
+    font-weight: 600;
+  }
+
+  @media (max-width: 640px) {
+    .pager {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

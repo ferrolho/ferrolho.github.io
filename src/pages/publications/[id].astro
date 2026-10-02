@@ -1,0 +1,153 @@
+---
+import { getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { getPublications, formatDate } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const pubs = await getPublications();
+  return pubs.map((pub) => ({ params: { id: pub.id }, props: { pub } }));
+}
+
+const { pub } = Astro.props;
+const d = pub.data;
+const { Content } = await render(pub);
+const og = d.thumb ? (await getImage({ src: d.thumb, width: 1200, format: 'jpg' })).src : undefined;
+const me = 'H. Ferrolho';
+const bib = `@${d.kind === 'journal' ? 'article' : 'inproceedings'}{${pub.id},
+  title = {${d.title}},
+  author = {${d.authors.join(' and ')}},
+  ${d.kind === 'journal' ? 'journal' : 'booktitle'} = {${d.venue}},
+  year = {${d.date.getFullYear()}}${d.doi ? `,\n  doi = {${d.doi}}` : ''}
+}`;
+---
+
+<Base title={d.title} description={`${d.venueShort} — ${d.authors.join(', ')}`} image={og} article>
+  <article class="wrap-narrow">
+    <a class="back" href="/publications/"><Icon name="arrow-left" size={15} /> All publications</a>
+    <p class="venue">
+      <span class:list={['kind', d.kind]}>{d.kind === 'journal' ? 'Journal' : 'Conference'}</span>
+      {d.venue} · {formatDate(d.date, { month: 'long', year: 'numeric' })}
+    </p>
+    <h1>{d.title}</h1>
+    <p class="authors">
+      {
+        d.authors.map((a, i) => (
+          <>
+            {a === me ? <strong>{a}</strong> : a}
+            {i < d.authors.length - 1 ? ', ' : ''}
+          </>
+        ))
+      }
+    </p>
+    <div class="actions">
+      {
+        d.pdf && (
+          <a class="btn btn-primary" href={d.pdf}>
+            <Icon name="paper" size={15} /> PDF
+          </a>
+        )
+      }
+      {
+        d.doi && (
+          <a class="btn" href={`https://doi.org/${d.doi}`}>
+            <Icon name="external" size={15} /> DOI
+          </a>
+        )
+      }
+      {
+        !d.doi && d.url && (
+          <a class="btn" href={d.url}>
+            <Icon name="external" size={15} /> arXiv
+          </a>
+        )
+      }
+      {
+        d.video && (
+          <a class="btn" href={`https://youtu.be/${d.video}`}>
+            <Icon name="play" size={13} /> Video
+          </a>
+        )
+      }
+    </div>
+    <div class="prose body">
+      <Content />
+      <h2>Cite</h2>
+      <pre class="bib"><code>{bib}</code></pre>
+    </div>
+  </article>
+</Base>
+
+<style>
+  article {
+    padding-top: clamp(28px, 4vw, 48px);
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+
+  .back:hover {
+    color: var(--accent-ink);
+  }
+
+  .venue {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 32px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+
+  .kind {
+    padding: 1px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--line-2);
+  }
+
+  .kind.journal {
+    color: var(--accent-ink);
+    border-color: color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+
+  h1 {
+    margin-top: 14px;
+    font-size: clamp(30px, 4.4vw, 46px);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .authors {
+    margin-top: 16px;
+    color: var(--ink-3);
+  }
+
+  .authors strong {
+    color: var(--ink);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .body {
+    margin-top: 40px;
+  }
+
+  .bib {
+    font-size: 13px;
+    background: var(--bg-elev);
+    white-space: pre;
+  }
+</style>

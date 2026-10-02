@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<Base title="Not found">
+  <section class="wrap nf blueprint">
+    <p class="eyebrow"><span class="idx">404</span>Not found</p>
+    <h1>This page fell over<span class="serif-accent">.</span></h1>
+    <p class="lead">No controller could have caught this one. The page may have moved when the site was redesigned.</p>
+    <p class="links">
+      <a class="btn btn-primary" href="/">Home <Icon name="arrow" size={16} /></a>
+      <a class="btn" href="/projects/">Projects</a>
+      <a class="btn" href="/blog/">Writing</a>
+    </p>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    padding-block: clamp(80px, 14vw, 180px);
+  }
+  h1 {
+    margin-top: 16px;
+    font-size: clamp(44px, 7vw, 88px);
+    letter-spacing: -0.04em;
+  }
+  .serif-accent {
+    color: var(--accent);
+  }
+  .lead {
+    margin-top: 18px;
+    max-width: 50ch;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 28px;
+  }
+</style>

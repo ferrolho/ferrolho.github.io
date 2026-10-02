@@ -1,0 +1,178 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+
+interface Props {
+  pub: CollectionEntry<'publications'>;
+  compact?: boolean;
+}
+const { pub, compact = false } = Astro.props;
+const d = pub.data;
+const me = 'H. Ferrolho';
+const doiUrl = d.doi ? `https://doi.org/${d.doi}` : d.url;
+---
+
+<article class:list={['pub', { compact }]}>
+  <a class="thumb" href={`/publications/${pub.id}/`} tabindex="-1" aria-hidden="true">
+    {d.thumb && <Image src={d.thumb} alt="" widths={[320, 560]} sizes="(max-width: 640px) 100vw, 240px" />}
+  </a>
+  <div class="text">
+    <p class="venue">
+      <span class:list={['kind', d.kind]}>{d.kind === 'journal' ? 'Journal' : 'Conference'}</span>
+      <span>{d.venueShort}</span>
+    </p>
+    <h3><a href={`/publications/${pub.id}/`}>{d.title}</a></h3>
+    <p class="authors">
+      {
+        d.authors.map((a, i) => (
+          <>
+            {a === me ? <strong>{a}</strong> : a}
+            {i < d.authors.length - 1 ? ', ' : ''}
+          </>
+        ))
+      }
+    </p>
+    {
+      !compact && (
+        <p class="links">
+          {d.pdf && (
+            <a href={d.pdf}>
+              <Icon name="paper" size={14} />
+              PDF
+            </a>
+          )}
+          {doiUrl && (
+            <a href={doiUrl}>
+              <Icon name="external" size={14} />
+              {d.doi ? 'DOI' : 'arXiv'}
+            </a>
+          )}
+          {d.video && (
+            <a href={`https://youtu.be/${d.video}`}>
+              <Icon name="play" size={12} />
+              Video
+            </a>
+          )}
+        </p>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .pub {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 24px;
+    align-items: start;
+    padding-block: 22px;
+    border-top: 1px solid var(--line);
+  }
+
+  .pub.compact {
+    grid-template-columns: 132px 1fr;
+    gap: 18px;
+    padding-block: 18px;
+  }
+
+  .thumb {
+    display: block;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-sunk);
+  }
+
+  .thumb :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+  }
+
+  .pub:hover .thumb :global(img) {
+    transform: scale(1.04);
+  }
+
+  .venue {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .kind {
+    padding: 1px 7px;
+    border-radius: 4px;
+    border: 1px solid var(--line-2);
+  }
+
+  .kind.journal {
+    color: var(--accent-ink);
+    border-color: color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+
+  h3 {
+    margin-top: 8px;
+    font-size: 18px;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  .compact h3 {
+    font-size: 16px;
+  }
+
+  h3 a {
+    transition: color 0.15s;
+  }
+
+  h3 a:hover {
+    color: var(--accent-ink);
+  }
+
+  .authors {
+    margin-top: 6px;
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+
+  .authors strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .links {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--ink-2);
+  }
+
+  .links a:hover {
+    color: var(--accent-ink);
+  }
+
+  @media (max-width: 640px) {
+    .pub,
+    .pub.compact {
+      grid-template-columns: 96px 1fr;
+      gap: 14px;
+    }
+    h3 {
+      font-size: 16px;
+    }
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+// Shared header for index pages (publications, blog, talks, CV).
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+  heading: string;
+  eyebrow: string;
+  index?: string;
+  description?: string;
+}
+const { title, heading, eyebrow, index, description } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <section class="page-head blueprint">
+    <div class="wrap">
+      <p class="eyebrow">{index && <span class="idx">{index}</span>}{eyebrow}</p>
+      <h1 set:html={heading} />
+      <div class="intro"><slot name="intro" /></div>
+    </div>
+  </section>
+  <div class="wrap page-body">
+    <slot />
+  </div>
+</Base>
+
+<style>
+  .page-head {
+    padding-block: clamp(48px, 8vw, 104px) clamp(36px, 5vw, 56px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  h1 {
+    margin-top: 14px;
+    font-size: clamp(44px, 7vw, 88px);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  h1 :global(em) {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    color: var(--accent);
+    font-size: 1.1em;
+    letter-spacing: -0.02em;
+  }
+
+  .intro {
+    margin-top: 22px;
+    max-width: 62ch;
+    font-size: clamp(17px, 1.6vw, 19px);
+    color: var(--ink-2);
+  }
+
+  .intro :global(a:not(.btn)) {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 3px;
+  }
+
+  .page-body {
+    padding-top: clamp(32px, 5vw, 56px);
+  }
+</style>

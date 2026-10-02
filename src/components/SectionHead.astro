@@ -1,0 +1,36 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  index?: string;
+  eyebrow: string;
+  title: string;
+  href?: string;
+  cta?: string;
+}
+const { index, eyebrow, title, href, cta } = Astro.props;
+---
+
+<div class="section-head">
+  <div>
+    <p class="eyebrow">{index && <span class="idx">{index}</span>}{eyebrow}</p>
+    <h2 set:html={title} />
+  </div>
+  {
+    href && (
+      <a class="link-arrow" href={href}>
+        {cta}
+        <Icon name="arrow" size={16} />
+      </a>
+    )
+  }
+</div>
+
+<style>
+  h2 :global(em) {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+</style>

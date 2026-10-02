@@ -1,101 +1,93 @@
-# Academic Pages
-**Academic Pages is a GitHub Pages template for personal and professional portfolio-oriented websites.**
+# ferrolho.github.io
 
-![Academic Pages template example](images/themes/homepage-light.png "Academic Pages template example")
+Personal site of Henrique Ferrolho — projects, research, talks, and writing.
+Built with [Astro](https://astro.build) and deployed to GitHub Pages by GitHub Actions.
 
-# Getting Started
-
-1. Register a GitHub account if you don't have one and confirm your e-mail (required!)
-1. Click the "Use this template" button in the top right.
-1. On the "New repository" page, enter your public repository name as "[your GitHub username].github.io", which will also be your website's URL.
-1. Edit site-wide configuration in `_config.yml` and double check that the `url` is the one that you just selected in the previous step and that `repository` reflects the correct path for your repository.
-1. Add your site content, upload any files (like PDFs, .zip files, etc.) to the `files/` directory. They will appear at https://[your GitHub username].github.io/files/example.pdf.
-1. Check status by going to the repository settings, in the "GitHub pages" section
-1. (Optional) Use the Jupyter notebooks or python scripts in the `markdown_generator` folder to generate markdown files for publications and talks from a TSV file.
-
-See more info at https://academicpages.github.io/
-
-### Additional Tutorials
-
-Additional tutorials for working with the Academic Pages template can be found at the following sites:
-- https://jayrobwilliams.com/posts/2020/06/academic-website/
-
-## Running locally
-
-When you are initially working on your website, it is very useful to be able to preview the changes locally before pushing them to GitHub. To work locally you will need to:
-
-1. Clone the repository and made updates as detailed above.
-
-### Using a different IDE
-1. Make sure you have ruby-dev, bundler, and nodejs installed
-    
-    On most Linux distributions and [Windows Subsystem Linux](https://learn.microsoft.com/en-us/windows/wsl/about) the command is:
-    ```bash
-    sudo apt install ruby-dev ruby-bundler nodejs
-    ```
-    If you see error `Unable to locate package ruby-bundler`, `Unable to locate package nodejs `, run the following:
-    ```bash
-    sudo apt update && sudo apt upgrade -y
-    ```
-    then try running `sudo apt install ruby-dev ruby-bundler nodejs` again.
-
-    On MacOS the commands are:
-    ```bash
-    brew install ruby
-    brew install node
-    gem install bundler
-    ```
-1. Run `bundle install` to install ruby dependencies. If you get errors, delete Gemfile.lock and try again.
-
-    If you see file permission error like `Fetching bundler-2.6.3.gem ERROR:  While executing gem (Gem::FilePermissionError) You don't have write permissions for the /var/lib/gems/3.2.0 directory.` or `Bundler::PermissionError: There was an error while trying to write to /usr/local/bin.`
-    Install Gems Locally (Recommended):
-    ```bash
-    bundle config set --local path 'vendor/bundle'
-    ```
-    then try run `bundle install` again. If succeeded, you should see a folder called `vendor` and `.bundle`.
-
-1. Run `jekyll serve -l -H localhost` to generate the HTML and serve it from `localhost:4000` the local server will automatically rebuild and refresh the pages on change to Markdown (*.md) and HTML files, while changes to the core template and configuration (i.e., `_config.yml`) will require stopping and restarting Jekyll.
-    You may also try `bundle exec jekyll serve -l -H localhost` to ensure jekyll to use specific dependencies on your own local machine.
-
-If you are running on Linux it may be necessary to install some additional dependencies prior to being able to run locally: `sudo apt install build-essential gcc make`
-
-## Using Docker
-
-Working from a different OS, or just want to avoid installing dependencies? You can use the provided `Dockerfile` to build a container that will run the site for you if you have [Docker](https://www.docker.com/) installed.
-
-You can build and execute the container by running the following command in the repository:
+## Develop
 
 ```bash
-chmod -R 777 .
-docker compose up
+npm install
+npm run dev       # http://localhost:4321 — drafts are visible here
+npm run build     # production build in dist/ — drafts are hidden
+npm run preview   # serve dist/ locally
+npm run check     # type-check content and components
 ```
 
-You should now be able to access the website from `localhost:4000`.
+Requires Node 22.12 or newer.
 
-### Using the DevContainer in VS Code
+## Where things live
 
-If you are using [Visual Studio Code](https://code.visualstudio.com/) you can use the [Dev Container](https://code.visualstudio.com/docs/devcontainers/containers) that comes with this Repository. Normally VS Code detects that a development container configuration is available and asks you if you want to use the container. If this doesn't happen you can manually start the container by **F1->DevContainer: Reopen in Container**. This restarts your VS Code in the container and automatically hosts your academic page locally on http://localhost:4000. All changes will be updated live to that page after a few seconds.
+| Path | What |
+| --- | --- |
+| `src/content/projects/*.md` | One file per project page in the gallery |
+| `src/content/publications/*.md` | Papers (abstract and videos in the body) |
+| `src/content/blog/*.md` | Blog posts; URL is `/blog/<file name>/` |
+| `src/data/archive.ts` | Smaller and older projects listed only in the archive on `/projects/` |
+| `src/data/talks.ts`, `cv.ts`, `videos.ts` | Talks, CV, and the YouTube snapshot |
+| `src/data/site.ts` | Name, role, navigation, and social links |
+| `src/assets/` | Images that get resized and converted to WebP at build time |
+| `public/` | Files served as-is: PDFs in `files/`, legacy `images/` and `videos/`, hover `previews/` |
+| `src/content.config.ts` | The schemas every content file is checked against |
 
-# Maintenance
+## Add a project
 
-Bug reports and feature requests to the template should be [submitted via GitHub](https://github.com/academicpages/academicpages.github.io/issues/new/choose). For questions concerning how to style the template, please feel free to start a [new discussion on GitHub](https://github.com/academicpages/academicpages.github.io/discussions).
+1. Put a cover image in `src/assets/projects/<slug>.jpg`. Screenshots at 16:10 look best; the gallery crops everything to 16:10.
+2. Create `src/content/projects/<slug>.md`:
 
-This repository was forked (then detached) by [Stuart Geiger](https://github.com/staeiou) from the [Minimal Mistakes Jekyll Theme](https://mmistakes.github.io/minimal-mistakes/), which is © 2016 Michael Rose and released under the MIT License (see LICENSE.md). It is currently being maintained by [Robert Zupko](https://github.com/rjzupkoii), and additional maintainers would be welcome.
+   ```yaml
+   ---
+   title: My Project
+   summary: One or two sentences, at most 160 characters. Shown on the card.
+   date: 2026-09-01            # sorts the gallery; the card shows the year
+   years: 2024 – 2026          # optional: overrides the year shown
+   topics: [robotics, hardware] # robotics | hardware | simulation | education | optimisation | web
+   stack: [Python, MuJoCo]
+   cover: ../../assets/projects/<slug>.jpg
+   coverAlt: What the image shows.
+   coverPosition: 50% 50%      # optional: which part of the image to keep when cropping
+   preview: /previews/<slug>.mp4  # optional: short muted loop played on hover
+   featured: 3                 # optional: position on the home page (1 = the large feature card)
+   youtube: VIDEO_ID           # optional: embedded at the top of the project page
+   stars: 42                   # optional: GitHub stars snapshot
+   views: 12k                  # optional: YouTube views snapshot
+   draft: true                 # optional: only visible in `npm run dev`
+   links:
+     demo: https://…
+     code: https://github.com/…
+     video: https://youtu.be/…
+     docs: https://…
+     paper: /publications/<id>/
+     post: /blog/<slug>/
+   ---
 
-## Bugfixes and enhancements
+   The write-up, in Markdown.
+   ```
 
-If you have bugfixes and enhancements that you would like to submit as a pull request, you will need to [fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo) this repository as opposed to using it as a template. This will also allow you to [synchronize your copy](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork) of the template to your fork as well.
+3. Run `npm run dev` and check the card at `/projects/`. The build fails if a required field is missing, which keeps every card consistent.
 
-Unfortunately, one logistical issue with a template theme like Academic Pages that makes it a little tricky to get bug fixes and updates to the core theme. If you use this template and customize it, you will probably get merge conflicts if you attempt to synchronize, although [rebasing](https://git-scm.com/docs/git-rebase) the changes from this template will work along with manually [cherry picking](https://git-scm.com/docs/git-cherry-pick) the relevant commits. If you are not comfortable with the Git command line, you can save your various `.yml` configuration files and Markdown files, delete the repository, and fork it again. 
+Hover previews are small H.264 loops, about 5 s at 720 px wide, with no audio:
 
----
-<div align="center">
-    
-![pages-build-deployment](https://github.com/academicpages/academicpages.github.io/actions/workflows/pages/pages-build-deployment/badge.svg)
-[![GitHub contributors](https://img.shields.io/github/contributors/academicpages/academicpages.github.io.svg)](https://github.com/academicpages/academicpages.github.io/graphs/contributors)
-[![GitHub release](https://img.shields.io/github/v/release/academicpages/academicpages.github.io)](https://github.com/academicpages/academicpages.github.io/releases/latest)
-[![GitHub license](https://img.shields.io/github/license/academicpages/academicpages.github.io?color=blue)](https://github.com/academicpages/academicpages.github.io/blob/master/LICENSE)
+```bash
+ffmpeg -ss 6 -t 5 -i input.mp4 -vf "scale=720:-2,fps=30" -an -c:v libx264 -crf 28 \
+  -pix_fmt yuv420p -movflags +faststart public/previews/<slug>.mp4
+```
 
-[![GitHub stars](https://img.shields.io/github/stars/academicpages/academicpages.github.io)](https://github.com/academicpages/academicpages.github.io)
-[![GitHub forks](https://img.shields.io/github/forks/academicpages/academicpages.github.io)](https://github.com/academicpages/academicpages.github.io/fork)
-</div>
+## The pendulum on the home page
+
+The hero is the live demo from the [rotary inverted pendulum](https://github.com/ferrolho/rotary-inverted-pendulum)
+docs, shown as an iframe of its `/embed/` page. Nothing is copied here: changes to the demo there show up here once
+that site is redeployed. If the embed cannot load, the project's cover image is shown instead.
+
+`npm run dev` expects the pendulum docs on port 4322 (`npm run dev -- --port 4322` in its `website/` folder).
+Set `PUBLIC_PENDULUM_EMBED` to point somewhere else.
+
+## Licence
+
+The code is MIT. The content — text, photos, and videos — is CC BY 4.0. Published papers keep their publishers' terms. See `LICENSE`.
+
+## Deploy
+
+Pushing to `master` runs `.github/workflows/deploy.yml`, which builds the site and publishes it to GitHub Pages.
+The first time only, set **Settings → Pages → Build and deployment → Source** to **GitHub Actions**.
+
+Old Jekyll URLs, such as `/about/`, `/other/`, and the category-based blog URLs, redirect to their new locations. The list is in `astro.config.mjs`.

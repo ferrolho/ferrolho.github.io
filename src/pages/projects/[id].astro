@@ -1,0 +1,342 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import YouTube from '../../components/YouTube.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { TOPICS } from '../../content.config';
+import { getProjects, projectYears, formatStars } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const projects = await getProjects();
+  return projects.map((project, i) => ({
+    params: { id: project.id },
+    props: { project, prev: projects[i - 1], next: projects[i + 1] },
+  }));
+}
+
+const { project, prev, next } = Astro.props;
+const d = project.data;
+const { Content } = await render(project);
+const og = await getImage({ src: d.cover, width: 1200, format: 'jpg' });
+
+const actions = [
+  d.links.demo && { href: d.links.demo, label: 'Live demo', icon: 'external', primary: true },
+  d.links.video && { href: d.links.video, label: 'Watch video', icon: 'play' },
+  d.links.docs && { href: d.links.docs, label: 'Docs', icon: 'book' },
+  d.links.code && { href: d.links.code, label: d.stars && d.stars >= 10 ? `Source · ★ ${formatStars(d.stars)}` : 'Source', icon: 'code' },
+  d.links.paper && { href: d.links.paper, label: 'Paper', icon: 'paper' },
+  d.links.post && { href: d.links.post, label: 'Blog post', icon: 'pen' },
+].filter(Boolean) as { href: string; label: string; icon: string; primary?: boolean }[];
+if (!actions.some((a) => a.primary) && actions[0]) actions[0].primary = true;
+
+const facts = [
+  { k: 'Year', v: projectYears(d) },
+  { k: 'Topics', v: d.topics.map((t) => TOPICS[t]).join(', ') },
+  { k: 'Stack', v: d.stack.join(', ') },
+  d.views && { k: 'Video views', v: d.views },
+].filter(Boolean) as { k: string; v: string }[];
+
+const shared = (p: typeof project) => p.data.topics.filter((t) => d.topics.includes(t)).length;
+const related = (await getProjects())
+  .filter((p) => p.id !== project.id && shared(p) > 0)
+  .sort((a, b) => shared(b) - shared(a))
+  .slice(0, 3);
+const external = (href: string) => /^https?:/.test(href);
+---
+
+<Base title={d.title} description={d.summary} image={og.src}>
+  <article>
+    <header class="head wrap">
+      <a class="back" href="/projects/"><Icon name="arrow-left" size={15} /> All projects</a>
+      <div class="head-grid">
+        <div>
+          <h1>{d.title}</h1>
+          <p class="lead">{d.summary}</p>
+          {d.draft && <p class="draft-note">Draft — this page only appears in <code>npm run dev</code>.</p>}
+          <div class="actions">
+            {
+              actions.map((a) => (
+                <a
+                  class:list={['btn', { 'btn-primary': a.primary }]}
+                  href={a.href}
+                  {...(external(a.href) ? { target: '_blank', rel: 'noopener' } : {})}
+                >
+                  <Icon name={a.icon} size={15} />
+                  {a.label}
+                </a>
+              ))
+            }
+          </div>
+        </div>
+        <dl class="facts">
+          {
+            facts.map((f) => (
+              <div>
+                <dt>{f.k}</dt>
+                <dd>{f.v}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </header>
+
+    <div class="wrap hero-media">
+      <div class="media" style={`view-transition-name: project-${project.id}`}>
+        {
+          d.youtube ? (
+            <YouTube id={d.youtube} title={d.title} poster={(await getImage({ src: d.cover, width: 1600, format: 'webp' })).src} />
+          ) : (
+            <Image
+              src={d.cover}
+              alt={d.coverAlt}
+              widths={[800, 1200, 1800]}
+              sizes="(max-width: 1240px) 100vw, 1160px"
+              loading="eager"
+              style={`object-position: ${d.coverPosition}`}
+            />
+          )
+        }
+      </div>
+    </div>
+
+    <div class="wrap-narrow prose body">
+      <Content />
+    </div>
+  </article>
+
+  <nav class="wrap pager" aria-label="More projects">
+    {
+      prev ? (
+        <a href={`/projects/${prev.id}/`} class="prev">
+          <span class="dir">
+            <Icon name="arrow-left" size={14} /> Newer
+          </span>
+          <span class="t">{prev.data.title}</span>
+        </a>
+      ) : (
+        <span />
+      )
+    }
+    {
+      next ? (
+        <a href={`/projects/${next.id}/`} class="next">
+          <span class="dir">
+            Older <Icon name="arrow" size={14} />
+          </span>
+          <span class="t">{next.data.title}</span>
+        </a>
+      ) : (
+        <span />
+      )
+    }
+  </nav>
+
+  {
+    related.length > 0 && (
+      <section class="wrap related">
+        <p class="eyebrow">Related</p>
+        <div class="related-grid">
+          {related.map((p) => (
+            <ProjectCard project={p} />
+          ))}
+        </div>
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .head {
+    padding-top: clamp(28px, 4vw, 48px);
+  }
+
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+
+  .back:hover {
+    color: var(--accent-ink);
+  }
+
+  .head-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: clamp(28px, 5vw, 80px);
+    align-items: end;
+    margin-top: clamp(20px, 3vw, 32px);
+  }
+
+  h1 {
+    font-size: clamp(38px, 5.6vw, 68px);
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+  }
+
+  .lead {
+    margin-top: 18px;
+    max-width: 56ch;
+  }
+
+  .draft-note {
+    margin-top: 14px;
+    font-size: 14px;
+    color: var(--accent-ink);
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 28px;
+  }
+
+  .facts {
+    margin: 0;
+    border-top: 1px solid var(--ink);
+  }
+
+  .facts div {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14.5px;
+  }
+
+  dt {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+    padding-top: 2px;
+  }
+
+  dd {
+    margin: 0;
+    color: var(--ink-2);
+  }
+
+  .hero-media {
+    margin-top: clamp(32px, 5vw, 56px);
+  }
+
+  .media {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-sunk);
+    box-shadow: var(--shadow);
+  }
+
+  .media > :global(img) {
+    width: 100%;
+    height: auto;
+    max-height: 72vh;
+    object-fit: cover;
+  }
+
+  .media :global(.yt) {
+    border: 0;
+    border-radius: 0;
+  }
+
+  .body {
+    margin-top: clamp(40px, 6vw, 72px);
+  }
+
+  .body > :global(:first-child) {
+    font-size: 19px;
+    color: var(--ink);
+  }
+
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: clamp(64px, 8vw, 96px);
+  }
+
+  .pager a {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    transition:
+      border-color 0.15s,
+      background 0.15s;
+  }
+
+  .pager a:hover {
+    border-color: var(--ink-3);
+    background: var(--bg-elev);
+  }
+
+  .pager .next {
+    text-align: right;
+    align-items: flex-end;
+  }
+
+  .dir {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .t {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .pager a:hover .t {
+    color: var(--accent-ink);
+  }
+
+  .related {
+    margin-top: clamp(64px, 8vw, 96px);
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 960px) {
+    .head-grid {
+      grid-template-columns: 1fr;
+    }
+    .related-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .related-grid > :global(:nth-child(3)) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .pager,
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+    .related-grid > :global(:nth-child(n + 2)) {
+      display: none;
+    }
+    .t {
+      font-size: 16px;
+    }
+  }
+</style>

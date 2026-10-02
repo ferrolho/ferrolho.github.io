@@ -1,0 +1,414 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import Icon from '../../components/Icon.astro';
+import { TOPICS } from '../../content.config';
+import { archive, type ArchiveItem } from '../../data/archive';
+import { getProjects } from '../../lib/format';
+
+const byDate = await getProjects();
+// Featured work first (in its curated order), then everything else, newest first.
+const projects = [
+  ...byDate.filter((p) => p.data.featured !== undefined).sort((a, b) => a.data.featured! - b.data.featured!),
+  ...byDate.filter((p) => p.data.featured === undefined),
+];
+const counts = Object.fromEntries(
+  Object.keys(TOPICS).map((t) => [t, projects.filter((p) => p.data.topics.includes(t as keyof typeof TOPICS)).length]),
+);
+
+// Everything, by year: full project pages plus the smaller archive entries.
+type Row = ArchiveItem & { internal?: boolean };
+const rows: Row[] = [
+  ...projects.map((p) => ({
+    year: p.data.date.getFullYear(),
+    title: p.data.title,
+    description: p.data.summary,
+    href: `/projects/${p.id}/`,
+    stack: p.data.stack.slice(0, 2).join(' · '),
+    stars: p.data.stars,
+    internal: true,
+  })),
+  ...archive,
+];
+const years = [...new Set(rows.map((r) => r.year))].sort((a, b) => b - a);
+const byYear = years.map((y) => ({ year: y, items: rows.filter((r) => r.year === y) }));
+const kindLabel: Record<string, string> = { blog: 'Blog', slides: 'Slides', work: 'Work' };
+---
+
+<Base title="Projects" description="Robots, hardware, simulations, and tools I have built since 2013.">
+  <section class="head blueprint">
+    <div class="wrap">
+      <p class="eyebrow"><span class="idx">{String(projects.length).padStart(2, '0')}</span>Projects</p>
+      <h1>Things I’ve <span class="serif-accent">built</span></h1>
+      <p class="lead">
+        Robots, sensors, simulations, and tools — most of them open source, many with a live demo you can play with right
+        now. The archive at the bottom goes all the way back to my first games in 2013.
+      </p>
+    </div>
+  </section>
+
+  <section class="wrap gallery-wrap">
+    <div class="filters" role="toolbar" aria-label="Filter projects by topic">
+      <button type="button" class="filter active" data-filter="all" aria-pressed="true">
+        All <span>{projects.length}</span>
+      </button>
+      {
+        Object.entries(TOPICS).map(([key, label]) => (
+          <button type="button" class="filter" data-filter={key} aria-pressed="false">
+            {label} <span>{counts[key]}</span>
+          </button>
+        ))
+      }
+      <span class="grow"></span>
+      <a class="jump" href="#archive">Archive by year <Icon name="arrow" size={14} /></a>
+    </div>
+
+    <div class="grid" data-grid>
+      {projects.map((p, i) => <ProjectCard project={p} eager={i < 3} />)}
+    </div>
+    <p class="empty" hidden data-empty>Nothing here yet.</p>
+  </section>
+
+  <section class="wrap archive" id="archive">
+    <div class="archive-head">
+      <p class="eyebrow"><span class="idx">∑</span>Archive</p>
+      <h2>Everything, by year</h2>
+      <p class="muted">{rows.length} projects, write-ups, and talks since {years.at(-1)}.</p>
+    </div>
+    <div class="years">
+      {
+        byYear.map(({ year, items }) => (
+          <div class="year-block">
+            <h3 class="year">{year}</h3>
+            <ul>
+              {items.map((r) => (
+                <li>
+                  <a href={r.href} {...(r.internal ? {} : { target: '_blank', rel: 'noopener' })}>
+                    <span class="a-title">
+                      {r.title}
+                      {r.kind && <span class="tag">{kindLabel[r.kind]}</span>}
+                    </span>
+                    <span class="a-desc">{r.description}</span>
+                    <span class="a-stack">{r.stack}</span>
+                    <span class="a-stars">
+                      {r.stars !== undefined && r.stars >= 10 && (
+                        <>
+                          <Icon name="star" size={12} />
+                          {r.stars}
+                        </>
+                      )}
+                    </span>
+                    <Icon name={r.internal ? 'arrow' : 'external'} size={15} class="a-go" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filter');
+  const cards = document.querySelectorAll<HTMLElement>('[data-grid] .card');
+  const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+
+  function apply(topic: string, push = true) {
+    let shown = 0;
+    buttons.forEach((b) => {
+      const on = b.dataset.filter === topic;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+    const update = () => {
+      cards.forEach((c) => {
+        const show = topic === 'all' || (c.dataset.topics ?? '').split(' ').includes(topic);
+        c.hidden = !show;
+        if (show) shown++;
+      });
+      empty.hidden = shown > 0;
+    };
+    // Animate the reflow where view transitions are available.
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+    if (doc.startViewTransition && !matchMedia('(prefers-reduced-motion: reduce)').matches) doc.startViewTransition(update);
+    else update();
+    if (push) {
+      const url = new URL(location.href);
+      if (topic === 'all') url.searchParams.delete('topic');
+      else url.searchParams.set('topic', topic);
+      history.replaceState(null, '', url);
+    }
+  }
+
+  buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.filter!)));
+  const initial = new URL(location.href).searchParams.get('topic');
+  if (initial && document.querySelector(`[data-filter="${initial}"]`)) apply(initial, false);
+</script>
+
+<style>
+  .head {
+    padding-block: clamp(48px, 8vw, 104px) clamp(36px, 5vw, 56px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .head h1 {
+    margin-top: 14px;
+    font-size: clamp(44px, 7vw, 88px);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+
+  .head .serif-accent {
+    color: var(--accent);
+    font-size: 1.1em;
+  }
+
+  .head .lead {
+    margin-top: 22px;
+    max-width: 60ch;
+  }
+
+  .gallery-wrap {
+    padding-top: 28px;
+  }
+
+  .filters {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding-block: 14px;
+    margin-bottom: 28px;
+    background: color-mix(in oklab, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .filter {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    background: transparent;
+    color: var(--ink-2);
+    font: 500 14px var(--font-sans);
+    cursor: pointer;
+    transition:
+      background 0.15s,
+      color 0.15s,
+      border-color 0.15s;
+  }
+
+  .filter span {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--ink-3);
+  }
+
+  .filter:hover {
+    border-color: var(--ink-3);
+    color: var(--ink);
+  }
+
+  .filter.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+
+  .filter.active span {
+    color: color-mix(in oklab, var(--bg) 65%, transparent);
+  }
+
+  .grow {
+    flex: 1;
+  }
+
+  .jump {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+
+  .jump:hover {
+    color: var(--accent-ink);
+  }
+
+  .jump :global(svg) {
+    transform: rotate(90deg);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 44px 28px;
+  }
+
+  .empty {
+    color: var(--ink-3);
+  }
+
+  /* Archive */
+  .archive {
+    margin-top: clamp(80px, 10vw, 140px);
+  }
+
+  .archive-head h2 {
+    margin-top: 10px;
+    font-size: clamp(30px, 4vw, 48px);
+  }
+
+  .archive-head .muted {
+    margin-top: 10px;
+  }
+
+  .years {
+    margin-top: 36px;
+    border-top: 1px solid var(--ink);
+  }
+
+  .year-block {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .year {
+    padding-top: 16px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-3);
+    letter-spacing: 0;
+  }
+
+  .year-block ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .year-block li + li {
+    border-top: 1px dashed var(--line);
+  }
+
+  .year-block a {
+    display: grid;
+    grid-template-columns: minmax(180px, 1.1fr) 2fr 150px 44px 18px;
+    gap: 16px;
+    align-items: baseline;
+    padding: 14px 8px;
+    transition: background 0.15s;
+  }
+
+  .year-block a:hover {
+    background: var(--bg-elev);
+  }
+
+  .a-title {
+    font-weight: 500;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .year-block a:hover .a-title {
+    color: var(--accent-ink);
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    padding: 0 5px;
+    border: 1px solid var(--line-2);
+    border-radius: 4px;
+    color: var(--ink-3);
+    font-weight: 400;
+  }
+
+  .a-desc {
+    font-size: 14.5px;
+    color: var(--ink-2);
+  }
+
+  .a-stack,
+  .a-stars {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .a-stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+
+  .a-stars :global(svg) {
+    color: var(--accent);
+  }
+
+  .year-block :global(.a-go) {
+    color: var(--ink-3);
+    align-self: center;
+  }
+
+  @media (max-width: 1080px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .year-block a {
+      grid-template-columns: 1fr 2fr 18px;
+    }
+    .a-stack,
+    .a-stars {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+    .jump {
+      display: none;
+    }
+    .filters {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      margin-inline: calc(var(--gutter) * -1);
+      padding-inline: var(--gutter);
+      scrollbar-width: none;
+    }
+    .filter {
+      flex-shrink: 0;
+    }
+    .year-block {
+      grid-template-columns: 1fr;
+    }
+    .year {
+      padding-top: 18px;
+      padding-left: 8px;
+    }
+    .year-block a {
+      grid-template-columns: 1fr 18px;
+      gap: 4px 12px;
+    }
+    .a-desc {
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
+</style>
