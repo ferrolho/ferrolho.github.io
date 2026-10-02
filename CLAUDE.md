@@ -20,12 +20,13 @@ The home-page hero embeds the pendulum demo from the rotary-inverted-pendulum re
 - `src/data/` — `site.ts` (name, role, nav, socials), `archive.ts` (small/old projects shown only in the archive), `talks.ts`, `cv.ts`, `videos.ts`, `stats.json` (generated).
 - `src/components/` — `ProjectCard`, `PendulumHero` (iframe host for the pendulum embed), `PubRow`, `VideoCard`, `YouTube` (click-to-load embed), `Icon`.
 - `public/` — served as-is: `files/` (PDFs), `images/` and `videos/` (used by old posts), favicon set (the Lego mug with the H — sentimental, keep it).
-- `astro.config.mjs` — includes redirects from the old Jekyll URLs; never remove one, since they are linked from READMEs and YouTube descriptions.
+- `astro.config.mjs` — redirects from the old Jekyll URLs. Don't add redirects for renamed projects: old project links are allowed to break.
 
 ## Conventions
 
 - Facts come from the user's own sources only: the PDF résumé (`~/git/resume`), repo READMEs, and paper abstracts. Never invent roles, degrees, awards, or numbers. The degrees are BSc + MSc from the University of Porto and a PhD in Robotics and Autonomous Systems from Edinburgh.
 - The site's role line stays "Robotics Technical Lead" unless the user says otherwise.
+- A project page's file name and URL are the repo's exact name (`src/content/projects/TORA.jl.md` with `slug: TORA.jl` → `/projects/TORA.jl/`); its cover and preview use the same name. When a repo is renamed, rename these to match. Only projects without a single repo (Balanbot, RoLoMa, CreateJS Playground) use descriptive names.
 - Projects stay in their own repos (each with its own GitHub Pages at `ferrolho.github.io/<repo>/`); this site links to them rather than hosting them. Avoid project slugs that collide with those repo paths at the root — project pages live under `/projects/`.
 - Only public repos appear on the site. `draft: true` hides a project or post in production.
 - Design tokens are CSS custom properties in `src/styles/global.css`, with light and dark themes. Fonts: Geist (sans), Geist Mono, Instrument Serif (accents only). Accent is international orange.

@@ -1,13 +1,14 @@
 ---
+slug: TORA.jl
 title: TORA.jl
 summary: Trajectory Optimisation for Robot Arms — describe a task at a high level and get a full, dynamically consistent trajectory back.
 date: 2020-10-31
 years: 2020 – 2023
 topics: [robotics, optimisation]
 stack: [Julia, Ipopt, Knitro, MeshCat]
-cover: ../../assets/projects/tora-jl.jpg
+cover: ../../assets/projects/TORA.jl.jpg
 coverAlt: A Kinova Gen3 Lite arm tracing a circle in the MeshCat visualiser.
-preview: /previews/tora-jl.mp4
+preview: /previews/TORA.jl.mp4
 featured: 5
 stars: 56
 youtube: 5uF3VqgjiVE

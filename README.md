@@ -31,21 +31,24 @@ Requires Node 22.12 or newer.
 
 ## Add a project
 
-1. Put a cover image in `src/assets/projects/<slug>.jpg`. Screenshots at 16:10 look best; the gallery crops everything to 16:10.
-2. Create `src/content/projects/<slug>.md`:
+Name everything after the project's repo, exactly (capitals and dots included).
+
+1. Put a cover image in `src/assets/projects/<repo>.jpg`. Screenshots at 16:10 look best; the gallery crops everything to 16:10.
+2. Create `src/content/projects/<repo>.md`:
 
    ```yaml
    ---
+   slug: <repo>                # only needed if the repo name has capitals or dots
    title: My Project
    summary: One or two sentences, at most 160 characters. Shown on the card.
    date: 2026-09-01            # sorts the gallery; the card shows the year
    years: 2024 – 2026          # optional: overrides the year shown
    topics: [robotics, hardware] # robotics | hardware | simulation | education | optimisation | web
    stack: [Python, MuJoCo]
-   cover: ../../assets/projects/<slug>.jpg
+   cover: ../../assets/projects/<repo>.jpg
    coverAlt: What the image shows.
    coverPosition: 50% 50%      # optional: which part of the image to keep when cropping
-   preview: /previews/<slug>.mp4  # optional: short muted loop played on hover
+   preview: /previews/<repo>.mp4  # optional: short muted loop played on hover
    featured: 3                 # optional: position on the home page (1 = the large feature card)
    youtube: VIDEO_ID           # optional: embedded at the top of the project page
    stars: 42                   # optional: GitHub stars snapshot
@@ -69,7 +72,7 @@ Hover previews are small H.264 loops, about 5 s at 720 px wide, with no audio:
 
 ```bash
 ffmpeg -ss 6 -t 5 -i input.mp4 -vf "scale=720:-2,fps=30" -an -c:v libx264 -crf 28 \
-  -pix_fmt yuv420p -movflags +faststart public/previews/<slug>.mp4
+  -pix_fmt yuv420p -movflags +faststart public/previews/<repo>.mp4
 ```
 
 ## The pendulum on the home page

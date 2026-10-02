@@ -1,10 +1,11 @@
 ---
+slug: pid-control-explained
 title: PID Control, Explained
 summary: Learn what P, I, and D actually do by tuning a controller on a simulated cart, with live plots and performance metrics.
 date: 2026-03-07
 topics: [education, simulation]
 stack: [JavaScript, Canvas]
-cover: ../../assets/projects/pid-control.jpg
+cover: ../../assets/projects/pid-control-explained.jpg
 coverAlt: The PID demo with a cart on a rail, gain sliders, and an explanatory side panel.
 featured: 6
 links:

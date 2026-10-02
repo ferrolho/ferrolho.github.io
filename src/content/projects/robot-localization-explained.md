@@ -1,12 +1,13 @@
 ---
+slug: robot-localization-explained
 title: Robot Localization, Explained
 summary: An interactive, step-by-step introduction to how a robot knows where it is — from dead reckoning to a Kalman filter to map-based localization.
 date: 2026-04-28
 topics: [education, robotics, simulation]
 stack: [TypeScript, Svelte, PixiJS]
-cover: ../../assets/projects/robot-localization.jpg
+cover: ../../assets/projects/robot-localization-explained.jpg
 coverAlt: A robot vacuum's true path and filter estimate diverging inside a room, with an uncertainty ellipse.
-preview: /previews/robot-localization.mp4
+preview: /previews/robot-localization-explained.mp4
 links:
   demo: https://ferrolho.github.io/robot-localization-explained/
   code: https://github.com/ferrolho/robot-localization-explained

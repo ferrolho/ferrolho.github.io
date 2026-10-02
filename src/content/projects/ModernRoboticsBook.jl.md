@@ -1,11 +1,12 @@
 ---
+slug: ModernRoboticsBook.jl
 title: ModernRoboticsBook.jl
 summary: A Julia port of the Modern Robotics textbook library — rigid-body motions, kinematics, dynamics, trajectory generation, and control.
 date: 2026-07-01
 years: 2019 – 2026
 topics: [robotics, education]
 stack: [Julia]
-cover: ../../assets/projects/modern-robotics-jl.jpg
+cover: ../../assets/projects/ModernRoboticsBook.jl.jpg
 coverAlt: The ModernRoboticsBook.jl documentation site.
 stars: 59
 links:

@@ -84,7 +84,7 @@ const external = (href: string) => /^https?:/.test(href);
     </header>
 
     <div class="wrap hero-media">
-      <div class="media" style={`view-transition-name: project-${project.id}`}>
+      <div class="media" style={`view-transition-name: project-${project.id.replace(/[^\w-]/g, '-')}`}>
         {
           d.youtube ? (
             <YouTube id={d.youtube} title={d.title} poster={(await getImage({ src: d.cover, width: 1600, format: 'webp' })).src} />

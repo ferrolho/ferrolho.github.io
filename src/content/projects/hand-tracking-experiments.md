@@ -1,12 +1,13 @@
 ---
+slug: hand-tracking-experiments
 title: Hand Tracking Experiments
 summary: Real-time monocular hand tracking on Apple Silicon — MediaPipe live at ~40 fps, WiLoR meshes offline — aimed at teleoperating a robot hand.
 date: 2026-06-09
 topics: [robotics]
 stack: [Python, MediaPipe, WiLoR, viser]
-cover: ../../assets/projects/hand-tracking.jpg
+cover: ../../assets/projects/hand-tracking-experiments.jpg
 coverAlt: A blue 3D hand mesh overlaid on a webcam image of an open hand.
-preview: /previews/hand-tracking.mp4
+preview: /previews/hand-tracking-experiments.mp4
 featured: 7
 links:
   demo: https://ferrolho.github.io/hand-tracking-experiments/

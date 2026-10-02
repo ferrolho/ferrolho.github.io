@@ -23,7 +23,7 @@ const primary = d.topics[0];
   data-year={d.date.getFullYear()}
 >
   <a href={href} class="card-link">
-    <div class="media" style={`view-transition-name: project-${project.id}`}>
+    <div class="media" style={`view-transition-name: project-${project.id.replace(/[^\w-]/g, '-')}`}>
       <Image
         src={d.cover}
         alt={d.coverAlt}

@@ -1,10 +1,11 @@
 ---
+slug: VL53L5CX-BNO08X-viewer
 title: Time-of-Flight 3D Scanner
 summary: Turn a £5 VL53L5CX multi-zone ToF sensor and an IMU into a real-time 3D point-cloud viewer and room mapper.
 date: 2026-02-03
 topics: [hardware, robotics]
 stack: [Python, ESP32, viser]
-cover: ../../assets/projects/tof-3d-scanner.jpg
+cover: ../../assets/projects/VL53L5CX-BNO08X-viewer.jpg
 coverAlt: Laser-like rays fanning out from a small sensor breadboard into a 3D point cloud.
 featured: 2
 stars: 525

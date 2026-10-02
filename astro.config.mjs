@@ -23,10 +23,6 @@ const redirects = {
   '/kdenlive/stabilizing-a-video-subject-in-kdenlive': '/blog/stabilizing-a-video-subject-in-kdenlive/',
   '/android/magisk': '/blog/magisk/',
   '/talks/2023-07-25-juliacon': '/talks/',
-  '/projects/pid-control-demo': '/projects/pid-control/',
-  // Project repos that were renamed: their GitHub Pages paths now belong to this site.
-  '/pid-control-demo': 'https://ferrolho.github.io/pid-control-explained/',
-  '/robot-localization-step-by-step': 'https://ferrolho.github.io/robot-localization-explained/',
 };
 
 export default defineConfig({

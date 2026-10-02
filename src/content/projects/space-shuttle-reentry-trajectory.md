@@ -1,10 +1,11 @@
 ---
+slug: space-shuttle-reentry-trajectory
 title: Space Shuttle Reentry
 summary: Computing a 33-minute Space Shuttle reentry trajectory in under 7 seconds with direct transcription and JuMP.
 date: 2020-05-25
 topics: [optimisation, simulation]
 stack: [Julia, JuMP, Ipopt]
-cover: ../../assets/projects/space-shuttle-reentry.jpg
+cover: ../../assets/projects/space-shuttle-reentry-trajectory.jpg
 coverAlt: Title card reading "Space Shuttle Reentry Trajectory" over a plot of the descent.
 stars: 28
 views: 6.3k
