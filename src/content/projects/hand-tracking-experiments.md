@@ -8,7 +8,6 @@ stack: [Python, MediaPipe, WiLoR, viser]
 cover: ../../assets/projects/hand-tracking-experiments.jpg
 coverAlt: A blue 3D hand mesh overlaid on a webcam image of an open hand.
 preview: /previews/hand-tracking-experiments.mp4
-featured: 7
 links:
   demo: https://ferrolho.github.io/hand-tracking-experiments/
   code: https://github.com/ferrolho/hand-tracking-experiments
