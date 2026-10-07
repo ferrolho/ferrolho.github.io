@@ -34,6 +34,17 @@ It started from a known complaint: with the stock firmware, reading the joint an
 - **Tracking** — on a 100 mm circle, lag compensation and three runs of iterative learning control reduce the error from **12.5 mm to 0.8–1.0 mm RMS**.
 - **Live mode** — the joints follow the browser's faders at up to **90 °/s**, as fast as a planned move, with a 200 ms deadman.
 
+## An AI agent at the controls
+
+With the firmware in place, I gave Claude Code (Opus 5.5) the arm, a webcam, and one goal: put plush toys and corks in a box. No demonstrations.
+
+It calibrated the camera with the arm, found the objects in the images, planned each move with inverse kinematics, and checked its work with the camera, the servo loads, and the IMU. It is slow and not perfect: the cow took 13 attempts, and I reset the scene and gave some hints. A side project with Xinnuo, who had the idea.
+
+<figure>
+  <video src="/videos/mycobot-280-lab/pick-and-place.mp4" poster="/videos/mycobot-280-lab/pick-and-place.jpg" width="1080" height="1080" controls muted playsinline preload="none" style="max-width: 560px; width: 100%"></video>
+  <figcaption>Three tasks, sped up: a plush cow, four wine corks (two runs), and a plush espresso cup.</figcaption>
+</figure>
+
 ## In the browser
 
 - **Setup** — install the firmware from Chrome or Edge over USB, then set up WiFi with Improv. The public build carries no WiFi credentials.
